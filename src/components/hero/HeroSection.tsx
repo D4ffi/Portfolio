@@ -4,14 +4,14 @@ import {GithubIcon, LucideLinkedin, MailIcon} from "lucide-react";
 
 const HeroSection: React.FC = () => {
     return (
-        <div className="w-full h-screen bg-gradient-to-b from-neutral-950 to-neutral-850 flex flex-col items-center justify-center relative overflow-hidden">
+        <div className="w-full h-screen bg-gradient-to-b from-gray-950 to-neutral-850 flex flex-col items-center justify-center relative overflow-hidden">
             {/* Contenido principal centrado */}
             <div className="flex flex-col items-center">
                 {/* Position "I am" to align with the start of "K" in "KOSS" */}
                 <p className="self-start ml-3 -mb-7">Hi I am</p>
 
                 <h1 className="text-[14rem] font-extrabold tracking-widest leading-none">
-                    KOSS
+                    Daffi
                 </h1>
 
                 {/* Position paragraphs to align with the end of "KOSS" */}
@@ -22,7 +22,7 @@ const HeroSection: React.FC = () => {
             </div>
 
             <div className="absolute bottom-0 inset-x-0 flex flex-col justify-end items-end p-8">
-                <p className="tracking-widest transform rotate-90 origin-bottom-left">mexican</p>
+                <p className="tracking-widest transform origin-bottom-left">Mexican guy</p>
             </div>
 
             {/* Botón posicionado en la parte inferior central */}
