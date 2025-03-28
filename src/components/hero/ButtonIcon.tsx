@@ -23,10 +23,11 @@ const ButtonIcon = ({ icon: Icon, onClick, href, className = '' }: ButtonIconPro
             <button
                 type="button"
                 onClick={handleClick}
-                className={`w-10 h-10 rounded-full border-2 border-white flex items-center justify-center text-white transition
+                className={`w-10 h-10 rounded-full border-2 border-tekhelet flex items-center justify-center  transition
+                dark:border-tropical-indigo
              hover:bg-white/10 active:bg-white/20 cursor-pointer ${className}`}
             >
-                <Icon size={20} />
+                <Icon size={20} className={"text-tekhelet dark:text-tropical-indigo"} />
             </button>
         </div>
     );
