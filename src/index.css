@@ -18,7 +18,7 @@
 
 :root {
 
-  --bg-color: #E5E7EB; /* gray-200 */
+  --bg-color: #E5E5E5; /* gray-200 */
   background-color: var(--bg-color);
 
 }

@@ -7,7 +7,7 @@ const NavBar: React.FC = () => {
         <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between pr-30 bg-transparent">
 
             <div>
-                <h1 className="p-5 pl-10 text-tekhelet font-bold text-[1.3rem] hover:text-tekhelet-dark transition-colors cursor-pointer dark:text-tropical-indigo">&lt; Daffi /&gt;</h1>
+                <h1 className="p-5 pl-10 text-tekhelet font-bold text-[1.3rem] hover:text-tekhelet-dark transition-colors cursor-pointer dark:text-tropical-indigo dark:hover:text-violet-100">&lt; Daffi /&gt;</h1>
             </div>
 
             <div className={" flex flex-row items-end justify-end "}>
