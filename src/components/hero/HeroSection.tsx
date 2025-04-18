@@ -5,7 +5,7 @@ import {GithubIcon, LucideLinkedin, MailIcon} from "lucide-react";
 const HeroSection: React.FC = () => {
     return (
         <div className="w-full h-screen bg-gradient-to-b from-mauve to-neutral-200 flex flex-col items-center justify-center relative overflow-hidden
-            dark:bg-gradient-to-b dark:from-violet-russian dark:to-violet-russian-dark
+            dark:bg-gradient-to-b dark:from-violet-russian dark:to-violet-dark-darker
         ">
 
 

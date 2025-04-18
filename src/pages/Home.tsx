@@ -4,7 +4,7 @@ import Layout from "../components/common/Layout.tsx";
 function Home() {
 
     return (
-      <div className={"h-200"}>
+      <div className={"bg-neutral-200 dark:bg-violet-dark-darker"}>
           <Layout title="Home">
               <HeroSection/>
 

@@ -14,15 +14,6 @@
   --color-tropical-indigo: #9984D4;
   --color-tekhelet: #592E83;
   --color-tekhelet-dark: #230C33;
-}
 
-:root {
-
-  --bg-color: #E5E5E5; /* gray-200 */
-  background-color: var(--bg-color);
-
-}
-
-@media (prefers-color-scheme: light) {
 
 }
