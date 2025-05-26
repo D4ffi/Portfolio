@@ -41,9 +41,9 @@ const ToggleDarkMode: React.FC = () => {
             aria-label={isDarkMode ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
         >
             {isDarkMode ? (
-                <SunIcon className="w-6 h-6 text-tropical-indigo hover:text-violet-100 cursor-pointer" />
+                <MoonIcon className="w-6 h-6 text-tropical-indigo hover:text-violet-100 cursor-pointer" />
             ) : (
-                <MoonIcon className="w-6 h-6 text-tekhelet hover:text-tekhelet-dark cursor-pointer" />
+                <SunIcon className="w-6 h-6 text-tekhelet hover:text-tekhelet-dark cursor-pointer" />
             )}
         </button>
     );

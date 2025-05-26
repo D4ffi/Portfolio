@@ -5,7 +5,7 @@ import {GithubIcon, LucideLinkedin, MailIcon} from "lucide-react";
 const HeroSection: React.FC = () => {
     return (
         <div className="w-full h-screen bg-gradient-to-b from-mauve to-neutral-200 flex flex-col items-center justify-center relative overflow-hidden
-            dark:bg-gradient-to-b dark:from-violet-russian dark:to-violet-dark-darker
+            dark:bg-gradient-to-b dark:from-violet-russian dark:to-violet-dark
         ">
 
 
@@ -15,18 +15,17 @@ const HeroSection: React.FC = () => {
                 <p className="self-start ml-3 -mb-7 ">Hi I am</p>
 
                 <h1 className=" text-tekhelet text-[14rem] font-extrabold tracking-widest leading-none dark:text-tropical-indigo">
-                    Daffi
+                    KOSS
                 </h1>
 
                 {/* Position paragraphs to align with the end of "KOSS" */}
                 <div className="text-tekhelet self-end mr-9 -mt-1 flex flex-col items-end dark:text-tropical-indigo">
                     <p className="text-lg">Full Stack Developer</p>
-                    <p className="text-lg">For Web development</p>
                 </div>
             </div>
 
             <div className="absolute bottom-15 inset-x-0 flex flex-col justify-end items-end p-8 ">
-                <p className="text-tekhelet tracking-widest transform origin-bottom-left dark:text-tropical-indigo">Mexican guy</p>
+                <p className="text-tekhelet tracking-widest transform origin-bottom-left dark:text-tropical-indigo">If you read this, you are awesome</p>
             </div>
 
             {/* Botón posicionado en la parte inferior central */}
