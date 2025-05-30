@@ -1,4 +1,3 @@
-
 import React from "react";
 
 interface LanguageCardProps {
@@ -10,9 +9,14 @@ const LanguageCard: React.FC<LanguageCardProps> = ({ imagePath, name }) => {
     return (
         <div className="flex flex-col items-center p-4 rounded-lg transition-all duration-50 hover:bg-neutral-300 dark:hover:bg-violet-dark">
             <img
-                src={new URL(`../assets/logos/${imagePath}`, import.meta.url).href}
+                src={`/logos/${imagePath}`}
                 alt={`${name} logo`}
                 className="w-20 h-20 object-contain mb-2"
+                onError={(e) => {
+                    console.error(`Failed to load image: /logos/${imagePath}`);
+                    // Fallback opcional
+                    e.currentTarget.src = '/logos/default.svg';
+                }}
             />
             <p className="text-tekhelet font-medium dark:text-tropical-indigo">{name}</p>
         </div>
