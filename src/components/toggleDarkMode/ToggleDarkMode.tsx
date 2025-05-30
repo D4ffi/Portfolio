@@ -1,12 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { SunIcon, MoonIcon } from "lucide-react";
 
 const ToggleDarkMode: React.FC = () => {
-    // Usamos useState para manejar el estado del dark mode
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
-    // Verificar el tema preferido al inicio, ya sea en localStorage o preferencias del sistema
     useEffect(() => {
         // Verificar preferencia guardada en localStorage
         const savedTheme = localStorage.getItem('theme');
@@ -37,13 +34,13 @@ const ToggleDarkMode: React.FC = () => {
     return (
         <button
             onClick={toggleDarkMode}
-            className="p-5 pr-10 flex items-center transition-colors duration-200 ease-in-out focus:outline-none"
+            className="p-2 sm:p-3 md:p-4 lg:p-5 flex items-center transition-colors duration-200 ease-in-out focus:outline-none"
             aria-label={isDarkMode ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
         >
             {isDarkMode ? (
-                <MoonIcon className="w-6 h-6 text-tropical-indigo hover:text-violet-100 cursor-pointer" />
+                <MoonIcon className="w-5 h-5 sm:w-6 sm:h-6 text-tropical-indigo hover:text-violet-100 cursor-pointer transition-colors duration-200" />
             ) : (
-                <SunIcon className="w-6 h-6 text-tekhelet hover:text-tekhelet-dark cursor-pointer" />
+                <SunIcon className="w-5 h-5 sm:w-6 sm:h-6 text-tekhelet hover:text-tekhelet-dark cursor-pointer transition-colors duration-200" />
             )}
         </button>
     );
