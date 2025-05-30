@@ -10,7 +10,7 @@ const LanguageCard: React.FC<LanguageCardProps> = ({ imagePath, name }) => {
     return (
         <div className="flex flex-col items-center p-4 rounded-lg transition-all duration-50 hover:bg-neutral-300 dark:hover:bg-violet-dark">
             <img
-                src={`/src/assets/logos/${imagePath}`}
+                src={new URL(`../assets/logos/${imagePath}`, import.meta.url).href}
                 alt={`${name} logo`}
                 className="w-20 h-20 object-contain mb-2"
             />
