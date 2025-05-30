@@ -4,8 +4,8 @@ import {GithubIcon, LucideLinkedin, MailIcon} from "lucide-react";
 
 const HeroSection: React.FC = () => {
     return (
-        <div className="w-full min-h-screen bg-gradient-to-b from-mauve to-neutral-200 flex flex-col items-center justify-center relative overflow-hidden
-            dark:bg-gradient-to-b dark:from-violet-russian dark:to-violet-dark px-4 py-20
+        <div className="w-full hero-full-screen bg-gradient-to-b from-mauve to-neutral-200 flex flex-col items-center justify-center relative overflow-hidden
+            dark:bg-gradient-to-b dark:from-violet-russian dark:to-violet-dark px-4
         ">
             {/* Contenido principal centrado */}
             <div className="text-tekhelet flex flex-col items-center dark:text-tropical-indigo text-center">
@@ -41,10 +41,11 @@ const HeroSection: React.FC = () => {
                 <ButtonIcon icon={MailIcon} href={"mailto:koss.cr@outlook.com"} />
             </div>
 
-            {/* Bottom message - responsive positioning and sizing */}
+            {/* Bottom message - responsive positioning and sizing - Hidden on small screens */}
             <div className="absolute bottom-4 sm:bottom-8 md:bottom-12 lg:bottom-16 right-4 sm:right-8 md:right-12 lg:right-16">
                 <p className="text-tekhelet dark:text-tropical-indigo text-xs sm:text-sm md:text-base
-                   tracking-wide transform origin-bottom-right max-w-xs sm:max-w-none text-right">
+                   tracking-wide transform origin-bottom-right max-w-xs sm:max-w-none text-right
+                   hidden sm:block">
                     If you read this, you are awesome
                 </p>
             </div>
