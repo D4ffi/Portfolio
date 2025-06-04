@@ -24,7 +24,7 @@ const translations = {
 
         // About Section
         'about.title': 'A little about me',
-        'about.description': 'I started this journey as a software developer because of Minecraft! Creating modpacks, editing configs, making datapacks, and even developing my own mod with Java—the rest is history. Now, I\'m on this software development path, and I love it, from planning and developing to publishing.',
+        'about.description': 'I am Kevin Coss, I started this journey as a software developer because of Minecraft! Creating modpacks, editing configs, making datapacks, and even developing my own mod with Java—the rest is history. Now, I\'m on this software development path, and I love it, from planning and developing to publishing.',
         'about.mod_link': 'See my Mod dev page',
         'about.tech_title': 'Tech Stack & Tools',
         'about.tech_description': 'I have experience with a variety of technologies and tools, including Java, JavaScript, TypeScript, React, Node.js, Express, MongoDB, PostgreSQL, and more. I also have experience with cloud platforms like AWS and GCP.',
@@ -71,7 +71,7 @@ const translations = {
 
         // About Section
         'about.title': 'Un poco sobre mí',
-        'about.description': '¡Comencé este viaje como desarrollador de software por Minecraft! Creando modpacks, editando configuraciones, haciendo datapacks, e incluso desarrollando mi propio mod con Java—el resto es historia. Ahora, estoy en este camino del desarrollo de software, y me encanta, desde planificar y desarrollar hasta publicar.',
+        'about.description': 'Soy Kevin Coss y ¡Comencé este viaje como desarrollador de software por Minecraft! Creando modpacks, editando configuraciones, haciendo datapacks, e incluso desarrollando mi propio mod con Java—el resto es historia. Ahora, estoy en este camino del desarrollo de software, y me encanta, desde planificar y desarrollar hasta publicar.',
         'about.mod_link': 'Ver mi página de desarrollo de Mods',
         'about.tech_title': 'Stack Tecnológico y Herramientas',
         'about.tech_description': 'Tengo experiencia con una variedad de tecnologías y herramientas, incluyendo Java, JavaScript, TypeScript, React, Node.js, Express, MongoDB, PostgreSQL, y más. También tengo experiencia con plataformas en la nube como AWS y GCP.',
