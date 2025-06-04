@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { SunIcon, MoonIcon } from "lucide-react";
+import {useLanguage} from "../../context/LanguageContext.tsx";
+
 
 const ToggleDarkMode: React.FC = () => {
+    const { t } = useLanguage();
+
     // Inicializar con el tema del cache para evitar flash del icono
     const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
         const THEME_KEY = 'portfolio-theme';
@@ -15,7 +19,6 @@ const ToggleDarkMode: React.FC = () => {
         // Leer el estado actual del DOM y localStorage
         const THEME_KEY = 'portfolio-theme';
         const savedTheme = localStorage.getItem(THEME_KEY);
-
 
         // Si hay discrepancia, usar el tema guardado como fuente de verdad
         const shouldBeDark = savedTheme === 'dark' ||
@@ -60,7 +63,7 @@ const ToggleDarkMode: React.FC = () => {
         <button
             onClick={toggleTheme}
             className="p-5 pr-10 flex items-center focus:outline-none transition-colors duration-200"
-            aria-label={isDarkMode ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+            aria-label={isDarkMode ? t('theme.light') : t('theme.dark')}
         >
             {isDarkMode ? (
                 <MoonIcon className="w-6 h-6 text-tropical-indigo hover:text-violet-100 cursor-pointer transition-colors duration-200" />

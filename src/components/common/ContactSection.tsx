@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import ButtonIcon from '../hero/ButtonIcon';
 import EmailModal from '../common/EmailModal';
+import {useLanguage} from "../../context/LanguageContext.tsx";
 
 const ContactSection: React.FC = () => {
     const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+    const { t } = useLanguage();
 
     const handleEmailClick = () => {
         setIsEmailModalOpen(true);
@@ -22,11 +24,10 @@ const ContactSection: React.FC = () => {
                     {/* Header */}
                     <div className="text-center mb-16">
                         <h2 className="text-4xl font-bold text-tekhelet dark:text-tropical-indigo mb-6 transition-colors duration-500">
-                            Let's Connect
+                            {t('contact.title')}
                         </h2>
                         <p className="text-lg text-tekhelet dark:text-tropical-indigo max-w-2xl mx-auto transition-colors duration-500">
-                            I'm always open to discussing new opportunities, collaborating on exciting projects,
-                            or just having a chat about technology and development.
+                            {t('contact.description')}
                         </p>
                     </div>
 
@@ -39,8 +40,8 @@ const ContactSection: React.FC = () => {
                                 className="transform group-hover:scale-110 transition-all duration-500"
                             />
                             <span className="mt-3 text-sm font-medium text-tekhelet dark:text-tropical-indigo opacity-0 group-hover:opacity-100 transition-all duration-500">
-                            LinkedIn
-                        </span>
+                                {t('social.linkedin')}
+                            </span>
                         </div>
 
                         <div className="flex flex-col items-center group">
@@ -50,8 +51,8 @@ const ContactSection: React.FC = () => {
                                 className="transform group-hover:scale-110 transition-all duration-500"
                             />
                             <span className="mt-3 text-sm font-medium text-tekhelet dark:text-tropical-indigo opacity-0 group-hover:opacity-100 transition-all duration-500">
-                            GitHub
-                        </span>
+                                {t('social.github')}
+                            </span>
                         </div>
 
                         <div className="flex flex-col items-center group">
@@ -61,18 +62,18 @@ const ContactSection: React.FC = () => {
                                 className="transform group-hover:scale-110 transition-all duration-500"
                             />
                             <span className="mt-3 text-sm font-medium text-tekhelet dark:text-tropical-indigo opacity-0 group-hover:opacity-100 transition-all duration-500">
-                            Email
-                        </span>
+                                {t('social.email')}
+                            </span>
                         </div>
                     </div>
 
                     {/* Call to Action */}
                     <div className="text-center">
                         <p className="text-tekhelet dark:text-tropical-indigo font-medium transition-colors duration-500">
-                            Ready to start a conversation?
+                            {t('contact.ready')}
                         </p>
                         <p className="text-sm text-tekhelet/70 dark:text-tropical-indigo/70 mt-2 transition-colors duration-500">
-                            Feel free to reach out through any of the platforms above
+                            {t('contact.reach_out')}
                         </p>
                     </div>
                 </div>

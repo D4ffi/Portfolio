@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import ButtonIcon from "./ButtonIcon";
 import { GithubIcon, LucideLinkedin, MailIcon } from "lucide-react";
 import EmailModal from "../common/EmailModal";
+import {useLanguage} from "../../context/LanguageContext.tsx";
+
 
 const HeroSection: React.FC = () => {
     const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+    const { t } = useLanguage();
 
     const handleEmailClick = () => {
         setIsEmailModalOpen(true);
@@ -21,7 +24,7 @@ const HeroSection: React.FC = () => {
             {/* Contenido principal centrado */}
             <div className="text-tekhelet flex flex-col items-center dark:text-tropical-indigo transition-colors duration-500">
                 {/* Position "I am" to align with the start of "K" in "KOSS" */}
-                <p className="self-start ml-3 -mb-7 transition-colors duration-500">Hi I am</p>
+                <p className="self-start ml-3 -mb-7 transition-colors duration-500">{t('hero.greeting')}</p>
 
                 <h1 className=" text-tekhelet text-[14rem] font-extrabold tracking-widest leading-none dark:text-tropical-indigo transition-colors duration-500">
                     KOSS
@@ -29,12 +32,14 @@ const HeroSection: React.FC = () => {
 
                 {/* Position paragraphs to align with the end of "KOSS" */}
                 <div className="text-tekhelet self-end mr-9 -mt-1 flex flex-col items-end dark:text-tropical-indigo transition-colors duration-500">
-                    <p className="text-lg transition-colors duration-500">Full Stack Developer</p>
+                    <p className="text-lg transition-colors duration-500">{t('hero.role')}</p>
                 </div>
             </div>
 
             <div className="absolute bottom-15 inset-x-0 flex flex-col justify-end items-end p-8 ">
-                <p className="text-tekhelet tracking-widest transform origin-bottom-left dark:text-tropical-indigo transition-colors duration-500">If you read this, you are awesome</p>
+                <p className="text-tekhelet tracking-widest transform origin-bottom-left dark:text-tropical-indigo transition-colors duration-500">
+                    {t('hero.easter_egg')}
+                </p>
             </div>
 
             {/* Botón posicionado en la parte inferior central */}

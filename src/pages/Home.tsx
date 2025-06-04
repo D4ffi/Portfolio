@@ -7,8 +7,11 @@ import dashboard1 from '../assets/sesa/dashboard1.png';
 import dashboard2 from '../assets/sesa/dashboard2.png';
 import dashboard3 from '../assets/sesa/dashboard3.png';
 import ContactSection from "../components/common/ContactSection.tsx";
+import {useLanguage} from "../context/LanguageContext.tsx";
 
 function Home() {
+    const { t } = useLanguage();
+
     return (
         <div className="bg-neutral-200 dark:bg-violet-grey transition-colors duration-500">
             <Layout title="Home">
@@ -20,31 +23,24 @@ function Home() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex flex-col items-center justify-center text-center">
                             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold mb-6 sm:mb-8 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
-                                A little about me
+                                {t('about.title')}
                             </h1>
 
                             <p className="text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl lg:max-w-2xl text-balance mb-6 sm:mb-8 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
-                                I started this journey as a software developer because of Minecraft!
-                                Creating modpacks, editing configs, making datapacks,
-                                and even developing my own mod with Java—the rest is history.
-                                Now, I'm on this software development path, and I love it,
-                                from planning and developing to publishing.
+                                {t('about.description')}
                             </p>
 
                             <a className="text-sm sm:text-base hover:underline transition-all duration-500 mb-12 sm:mb-16 md:mb-20 lg:mb-24 text-tekhelet dark:text-tropical-indigo hover:text-tekhelet-dark dark:hover:text-mauve"
                                href="https://google.com">
-                                See my Mod dev page --{">"}
+                                {t('about.mod_link')} --{">"}
                             </a>
 
                             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold mb-6 sm:mb-8 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
-                                Tech Stack & Tools
+                                {t('about.tech_title')}
                             </h2>
 
                             <p className="text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl lg:max-w-2xl text-balance mb-8 sm:mb-10 md:mb-12 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
-                                I have experience with a variety of technologies and tools,
-                                including Java, JavaScript, TypeScript, React, Node.js, Express,
-                                MongoDB, PostgreSQL, and more. I also have experience with
-                                cloud platforms like AWS and GCP.
+                                {t('about.tech_description')}
                             </p>
 
                             {/*  TECH STACK Flexbox con wrap (Recomendada) */}
@@ -69,7 +65,7 @@ function Home() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex flex-col items-center justify-center text-center">
                             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 sm:mb-16 md:mb-20 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
-                                Projects
+                                {t('projects.title')}
                             </h1>
 
                             {/* Projects Container - Always centered regardless of quantity */}
@@ -77,8 +73,8 @@ function Home() {
                                 <div className="flex flex-wrap justify-center gap-8 sm:gap-10 md:gap-12">
                                     <ProjectCard
                                         images={[dashboard1, dashboard, dashboard2, dashboard3]}
-                                        title="Inventory Management Software"
-                                        description="This project is an inventory manager created for Sesa Promo, a company based in Monterrey that specializes in the sale of promotional products. The solution includes a way to register and manage products, categories, and organize stock across the different warehouses the company has, with the ability to create or edit them."
+                                        title={t('projects.inventory.title')}
+                                        description={t('projects.inventory.description')}
                                         technologies={['TypeScript','React','TailwindCSS','Supabase']}
                                     />
                                     {/* Add more ProjectCard components here as needed */}

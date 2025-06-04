@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import ToggleDarkMode from "../toggleDarkMode/ToggleDarkMode.tsx";
+import LanguageSelector from "./LanguageSelector.tsx";
 import { Menu, X } from "lucide-react";
+import {useLanguage} from "../../context/LanguageContext.tsx";
 
 const NavBar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { t } = useLanguage();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -36,25 +39,27 @@ const NavBar: React.FC = () => {
                             onClick={() => handleNavClick('about')}
                             className="text-tekhelet hover:text-tekhelet-dark hover:underline cursor-pointer transition-colors dark:text-tropical-indigo dark:hover:text-violet-100"
                         >
-                            About Me
+                            {t('nav.about')}
                         </button>
                         <button
                             onClick={() => handleNavClick('projects')}
                             className="text-tekhelet hover:text-tekhelet-dark hover:underline cursor-pointer transition-colors dark:text-tropical-indigo dark:hover:text-violet-100"
                         >
-                            Projects
+                            {t('nav.projects')}
                         </button>
                         <button
                             onClick={() => handleNavClick('contact')}
                             className="text-tekhelet hover:text-tekhelet-dark hover:underline cursor-pointer transition-colors dark:text-tropical-indigo dark:hover:text-violet-100"
                         >
-                            Contact
+                            {t('nav.contact')}
                         </button>
+                        <LanguageSelector />
                         <ToggleDarkMode />
                     </div>
 
                     {/* Mobile menu button */}
                     <div className="md:hidden flex items-center space-x-2">
+                        <LanguageSelector />
                         <ToggleDarkMode />
                         <button
                             onClick={toggleMenu}
@@ -73,19 +78,19 @@ const NavBar: React.FC = () => {
                                 onClick={() => handleNavClick('about')}
                                 className="block w-full text-left text-tekhelet hover:text-tekhelet-dark hover:underline cursor-pointer transition-colors dark:text-tropical-indigo dark:hover:text-violet-100 py-2"
                             >
-                                About Me
+                                {t('nav.about')}
                             </button>
                             <button
                                 onClick={() => handleNavClick('projects')}
                                 className="block w-full text-left text-tekhelet hover:text-tekhelet-dark hover:underline cursor-pointer transition-colors dark:text-tropical-indigo dark:hover:text-violet-100 py-2"
                             >
-                                Projects
+                                {t('nav.projects')}
                             </button>
                             <button
                                 onClick={() => handleNavClick('contact')}
                                 className="block w-full text-left text-tekhelet hover:text-tekhelet-dark hover:underline cursor-pointer transition-colors dark:text-tropical-indigo dark:hover:text-violet-100 py-2"
                             >
-                                Contact
+                                {t('nav.contact')}
                             </button>
                         </div>
                     </div>

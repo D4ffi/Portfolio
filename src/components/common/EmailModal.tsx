@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { X, Copy, Check } from 'lucide-react';
+import {useLanguage} from "../../context/LanguageContext.tsx";
+
 
 interface EmailModalProps {
     isOpen: boolean;
@@ -9,6 +11,7 @@ interface EmailModalProps {
 const EmailModal: React.FC<EmailModalProps> = ({ isOpen, onClose }) => {
     const [isCopied, setIsCopied] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
+    const { t } = useLanguage();
 
     // Email obfuscado - se construye dinámicamente para evitar scraping
     const getEmail = () => {
@@ -88,13 +91,13 @@ const EmailModal: React.FC<EmailModalProps> = ({ isOpen, onClose }) => {
             onClick={handleBackdropClick}
         >
             <div
-                className="bg-white dark:bg-violet-russian rounded-xl shadow-2xl border border-gray-200 dark:border-violet-dark max-w-md w-full mx-4 animate-in fade-in zoom-in duration-200"
+                className="bg-white dark:bg-violet-grey rounded-xl shadow-2xl border border-gray-200 dark:border-violet-dark max-w-md w-full mx-4 animate-in fade-in zoom-in duration-200"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-violet-dark">
                     <h3 className="text-lg font-semibold text-tekhelet dark:text-tropical-indigo">
-                        Contact Information
+                        {t('email.modal.title')}
                     </h3>
                     <button
                         onClick={onClose}
@@ -109,7 +112,7 @@ const EmailModal: React.FC<EmailModalProps> = ({ isOpen, onClose }) => {
                 <div className="p-6">
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-tekhelet dark:text-tropical-indigo mb-2">
-                            Email Address
+                            {t('email.modal.label')}
                         </label>
                         <div className="flex items-center gap-3">
                             <div
@@ -141,12 +144,12 @@ const EmailModal: React.FC<EmailModalProps> = ({ isOpen, onClose }) => {
                                 {isCopied ? (
                                     <>
                                         <Check size={16} />
-                                        Copied!
+                                        {t('email.modal.copied')}
                                     </>
                                 ) : (
                                     <>
                                         <Copy size={16} />
-                                        Copy
+                                        {t('email.modal.copy')}
                                     </>
                                 )}
                             </button>
@@ -154,17 +157,17 @@ const EmailModal: React.FC<EmailModalProps> = ({ isOpen, onClose }) => {
                     </div>
 
                     <p className="text-sm text-gray-600 dark:text-tropical-indigo/80">
-                        Feel free to reach out for collaboration opportunities, questions, or just to say hello!
+                        {t('email.modal.description')}
                     </p>
                 </div>
 
                 {/* Footer */}
-                <div className="px-6 py-4 bg-gray-50 dark:bg-violet-dark rounded-b-xl">
+                <div className="px-6 py-4 bg-gray-50 dark:bg-violet-grey rounded-b-xl">
                     <button
                         onClick={onClose}
-                        className="w-full px-4 py-2 bg-gray-200 dark:bg-violet-russian text-tekhelet dark:text-tropical-indigo rounded-lg hover:bg-gray-300 dark:hover:bg-violet-russian-mid transition-colors font-medium"
+                        className="w-full px-4 py-2 dark:text-tropical-indigo bg-gray-50 dark:bg-violet-dark rounded-lg border border-gray-200 dark:border-violet-russian cursor-pointer hover:bg-gray-100 dark:hover:bg-violet-russian transition-colors font-medium"
                     >
-                        Close
+                        {t('email.modal.close')}
                     </button>
                 </div>
             </div>

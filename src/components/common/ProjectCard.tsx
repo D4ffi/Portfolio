@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, X, ExternalLink, Eye } from 'lucide-react';
+import {useLanguage} from "../../context/LanguageContext.tsx";
 
 interface ProjectCardProps {
     images: string[];
@@ -18,6 +19,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                                                  }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const { t } = useLanguage();
 
     const nextImage = () => {
         setCurrentImageIndex((prev) => (prev + 1) % images.length);
@@ -160,7 +162,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                             onClick={onExpand}
                             className="w-full backdrop-blur-md bg-tekhelet/20 hover:bg-tekhelet/30 dark:bg-tropical-indigo/20 dark:hover:bg-tropical-indigo/30 border border-tekhelet/30 dark:border-tropical-indigo/30 text-tekhelet dark:text-tropical-indigo font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group/button hover:scale-[1.02] hover:shadow-lg"
                         >
-                            Project Details
+                            {t('projects.details_button')}
                             <ExternalLink size={16} className="group-hover/button:translate-x-1 transition-transform duration-200" />
                         </button>
                     </div>
