@@ -45,7 +45,6 @@ html, body {
 
 /* Para el hero que debe ocupar toda la pantalla */
 .hero-full-screen {
-  min-height: 100vh;
   min-height: 100dvh;
   padding-bottom: max(2rem, env(safe-area-inset-bottom));
 }
@@ -57,4 +56,21 @@ body {
 
 body.dark {
   background-color: #3A015C; /* violet-russian para modo oscuro */
+}
+
+/* Transiciones condicionadas - solo se aplican después de la inicialización */
+body.transitions-enabled * {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+}
+
+/* Override para elementos que necesitan transiciones más rápidas */
+body.transitions-enabled .fast-transition {
+  transition-duration: 200ms;
+}
+
+/* Override para elementos que no deben tener transición */
+body.transitions-enabled .no-transition {
+  transition: none !important;
 }

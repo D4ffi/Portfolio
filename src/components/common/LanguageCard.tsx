@@ -7,7 +7,7 @@ interface LanguageCardProps {
 
 const LanguageCard: React.FC<LanguageCardProps> = ({ imagePath, name }) => {
     return (
-        <div className="flex flex-col items-center p-4 rounded-lg transition-all duration-50 hover:bg-neutral-300 dark:hover:bg-violet-dark">
+        <div className="flex flex-col items-center p-4 rounded-lg transition-all duration-500 hover:bg-neutral-300 dark:hover:bg-violet-dark">
             <img
                 src={`/logos/${imagePath}`}
                 alt={`${name} logo`}
@@ -18,7 +18,7 @@ const LanguageCard: React.FC<LanguageCardProps> = ({ imagePath, name }) => {
                     e.currentTarget.src = '/logos/default.svg';
                 }}
             />
-            <p className="text-tekhelet font-medium dark:text-tropical-indigo">{name}</p>
+            <p className="text-tekhelet font-medium dark:text-tropical-indigo transition-colors duration-500">{name}</p>
         </div>
     );
 };
