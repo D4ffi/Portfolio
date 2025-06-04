@@ -1,62 +1,110 @@
 import React, { useState, useEffect } from 'react';
 import { SunIcon, MoonIcon } from "lucide-react";
-import {useLanguage} from "../../context/LanguageContext.tsx";
-
+import { useLanguage } from "../../context/LanguageContext.tsx";
 
 const ToggleDarkMode: React.FC = () => {
     const { t } = useLanguage();
 
-    // Inicializar con el tema del cache para evitar flash del icono
+    // Función para leer el estado REAL del DOM
+    const readDOMTheme = (): boolean => {
+        return document.body.classList.contains('dark') ||
+            document.documentElement.classList.contains('dark');
+    };
+
+    // Inicializar leyendo primero el DOM, luego localStorage
     const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-        const THEME_KEY = 'portfolio-theme';
-        const savedTheme = localStorage.getItem(THEME_KEY);
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        return savedTheme === 'dark' || (!savedTheme && prefersDark);
+        // Si estamos en el navegador, leer el estado real del DOM primero
+        if (typeof window !== 'undefined') {
+            // Intentar leer del DOM (más confiable)
+            const domHasDark = readDOMTheme();
+
+            // Si el DOM ya tiene la clase dark, usar eso
+            if (domHasDark) {
+                return true;
+            }
+
+            // Si no, verificar localStorage
+            const THEME_KEY = 'portfolio-theme';
+            const savedTheme = localStorage.getItem(THEME_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            return savedTheme === 'dark' || (!savedTheme && prefersDark);
+        }
+
+        return false; // SSR fallback
     });
 
-    // Sincronizar con el estado actual del tema
+    // Sincronización en el mount y cuando cambie el DOM
     useEffect(() => {
-        // Leer el estado actual del DOM y localStorage
-        const THEME_KEY = 'portfolio-theme';
-        const savedTheme = localStorage.getItem(THEME_KEY);
+        // Función para sincronizar el estado con el DOM real
+        const syncWithDOM = () => {
+            const currentDOMState = readDOMTheme();
 
-        // Si hay discrepancia, usar el tema guardado como fuente de verdad
-        const shouldBeDark = savedTheme === 'dark' ||
-            (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            // Solo actualizar si hay diferencia
+            if (currentDOMState !== isDarkMode) {
+                console.log('🔄 Syncing icon with DOM state:', currentDOMState);
+                setIsDarkMode(currentDOMState);
+            }
+        };
 
-        setIsDarkMode(shouldBeDark);
+        // Sincronizar inmediatamente
+        syncWithDOM();
 
-        // Escuchar cambios en el tema (opcional, para sincronización entre pestañas)
-        const observer = new MutationObserver(() => {
-            const isNowDark = document.body.classList.contains('dark');
-            setIsDarkMode(isNowDark);
+        // Observer para detectar cambios en las clases del DOM
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' &&
+                    (mutation.attributeName === 'class')) {
+                    syncWithDOM();
+                }
+            });
         });
 
+        // Observar cambios en body y html
         observer.observe(document.body, {
             attributes: true,
             attributeFilter: ['class']
         });
 
-        return () => observer.disconnect();
-    }, []);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
 
-    // Función para cambiar tema usando transiciones
+        // Listener para cambios de localStorage entre pestañas
+        const handleStorageChange = (e: StorageEvent) => {
+            if (e.key === 'portfolio-theme') {
+                // Pequeño delay para que el DOM se actualice primero
+                setTimeout(syncWithDOM, 50);
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, []); // Solo ejecutar una vez al montar
+
+    // Función para cambiar tema
     const toggleTheme = () => {
         const THEME_KEY = 'portfolio-theme';
-        const currentlyDark = isDarkMode; // Usar el estado local como referencia
-        const newTheme = currentlyDark ? 'light' : 'dark';
+        const newTheme = !isDarkMode;
 
-        if (currentlyDark) {
-            document.documentElement.classList.remove('dark');
-            document.body.classList.remove('dark');
-        } else {
+        // Aplicar cambios al DOM
+        if (newTheme) {
             document.documentElement.classList.add('dark');
             document.body.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            document.body.classList.remove('dark');
         }
 
-        // Guardar preferencia
-        localStorage.setItem(THEME_KEY, newTheme);
-        setIsDarkMode(!currentlyDark);
+        // Guardar en localStorage
+        localStorage.setItem(THEME_KEY, newTheme ? 'dark' : 'light');
+
+        // Actualizar estado local
+        setIsDarkMode(newTheme);
     };
 
     return (
