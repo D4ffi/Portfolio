@@ -1,58 +1,135 @@
-import React, { useState } from "react";
-import ButtonIcon from "./ButtonIcon";
-import { GithubIcon, LucideLinkedin, MailIcon } from "lucide-react";
-import EmailModal from "../common/EmailModal";
-import {useLanguage} from "../../context/LanguageContext.tsx";
-
+import React, { useEffect, useState, useRef } from "react";
 
 const HeroSection: React.FC = () => {
-    const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
-    const { t } = useLanguage();
+  const [isDark, setIsDark] = useState(false);
+  const gradientRef = useRef<HTMLDivElement>(null);
+  const lightImageRef = useRef<HTMLImageElement>(null);
+  const darkImageRef = useRef<HTMLImageElement>(null);
 
-    const handleEmailClick = () => {
-        setIsEmailModalOpen(true);
+  useEffect(() => {
+    // Detectar el tema inicial
+    const checkTheme = () => {
+      const hasDarkClass =
+        document.documentElement.classList.contains("dark") ||
+        document.body.classList.contains("dark");
+      setIsDark(hasDarkClass);
     };
 
-    const closeEmailModal = () => {
-        setIsEmailModalOpen(false);
+    checkTheme();
+
+    // Observer para detectar cambios en el tema
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    // Manipulación directa del DOM para el scroll
+    const handleScroll = () => {
+      if (
+        !gradientRef.current ||
+        !lightImageRef.current ||
+        !darkImageRef.current
+      )
+        return;
+
+      const scrollY = window.scrollY;
+
+      // Threshold para el degradado (altura y opacidad)
+      const gradientThreshold = 500;
+      const progress = Math.min(scrollY / gradientThreshold, 1);
+
+      // La opacidad del degradado sube muy rápido (primeros 50px)
+      const gradientOpacity = Math.min(scrollY / 50, 1);
+
+      // Threshold más alto para las imágenes (desaparecen más lento)
+      const imageThreshold = 500;
+      const imageOpacity = Math.max(1 - scrollY / imageThreshold, 0);
+
+      // La altura crece de 30% a 50% según el scroll
+      const minHeight = 30;
+      const maxHeight = 50;
+      const height = minHeight + (maxHeight - minHeight) * progress;
+
+      // Actualizar el degradado
+      gradientRef.current.style.opacity = gradientOpacity.toString();
+      gradientRef.current.style.height = `${height}%`;
+
+      // Actualizar opacidad de las imágenes (se desvanecen con el scroll)
+      if (isDark) {
+        darkImageRef.current.style.opacity = imageOpacity.toString();
+      } else {
+        lightImageRef.current.style.opacity = imageOpacity.toString();
+      }
     };
 
-    return (
-        <div className="w-full h-screen bg-gradient-to-b from-mauve to-neutral-200 flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-500
-            dark:bg-gradient-to-b dark:from-violet-russian dark:to-violet-dark
-        ">
-            {/* Contenido principal centrado */}
-            <div className="text-tekhelet flex flex-col items-center dark:text-tropical-indigo transition-colors duration-500">
-                {/* Position "I am" to align with the start of "K" in "KOSS" */}
-                <p className="self-start ml-3 -mb-7 transition-colors duration-500">{t('hero.greeting')}</p>
+    // Ejecutar al montar
+    handleScroll();
 
-                <h1 className=" text-tekhelet text-[14rem] font-extrabold tracking-widest leading-none dark:text-tropical-indigo transition-colors duration-500">
-                    KOSS
-                </h1>
+    // Agregar listener
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-                {/* Position paragraphs to align with the end of "KOSS" */}
-                <div className="text-tekhelet self-end mr-9 -mt-1 flex flex-col items-end dark:text-tropical-indigo transition-colors duration-500">
-                    <p className="text-lg transition-colors duration-500">{t('hero.role')}</p>
-                </div>
-            </div>
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isDark]);
 
-            <div className="absolute bottom-15 inset-x-0 flex flex-col justify-end items-end p-8 ">
-                <p className="text-tekhelet tracking-widest transform origin-bottom-left dark:text-tropical-indigo transition-colors duration-500">
-                    {t('hero.easter_egg')}
-                </p>
-            </div>
+  return (
+    <div className="hero-container w-full h-screen flex flex-col items-center justify-center relative overflow-hidden bg-bg-light dark:bg-bg-dark">
+      {/* Imagen de fondo modo claro */}
+      <img
+        ref={lightImageRef}
+        src="/fondo_light_2k.png"
+        alt="Hero background light"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
+        style={{ opacity: isDark ? 0 : 1 }}
+      />
 
-            {/* Botón posicionado en la parte inferior central */}
-            <div className="absolute bottom-15 inset-x-0 flex flex-col justify-evenly p-8 ">
-                <ButtonIcon icon={LucideLinkedin} href={"https://www.linkedin.com/in/kevin-coss-25427225b/"} />
-                <ButtonIcon icon={GithubIcon} href={"https://github.com/D4ffi"} />
-                <ButtonIcon icon={MailIcon} onClick={handleEmailClick} />
-            </div>
+      {/* Imagen de fondo modo oscuro */}
+      <img
+        ref={darkImageRef}
+        src="/fondo_dark_2k.png"
+        alt="Hero background dark"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
+        style={{ opacity: isDark ? 1 : 0 }}
+      />
 
-            {/* Email Modal */}
-            <EmailModal isOpen={isEmailModalOpen} onClose={closeEmailModal} />
-        </div>
-    );
+      {/* Degradado en la parte inferior para hacer fade con la siguiente sección */}
+      <div
+        ref={gradientRef}
+        className="absolute bottom-0 left-0 right-0 pointer-events-none z-[5]"
+        style={{
+          height: "30%",
+          opacity: 0,
+          background: isDark
+            ? "linear-gradient(to bottom, rgba(21, 26, 31, 0) 0%, rgba(21, 26, 31, 0.8) 50%, rgba(21, 26, 31, 1) 100%)"
+            : "linear-gradient(to bottom, rgba(252, 252, 251, 0) 0%, rgba(252, 252, 251, 0.8) 50%, rgba(252, 252, 251, 1) 100%)",
+          transition: "background 700ms ease-in-out",
+        }}
+      />
+
+      {/* Texto "Koss" */}
+      <h1
+        className="hero-text text-9xl font-serif tracking-wider z-10 relative transition-colors duration-700"
+        style={{
+          color: isDark ? "#FCFCFB" : "#171717",
+          fontFamily: '"Playfair Display", serif',
+          fontWeight: 700,
+          letterSpacing: "0.15em",
+        }}
+      >
+        Koss
+      </h1>
+    </div>
+  );
 };
 
 export default HeroSection;

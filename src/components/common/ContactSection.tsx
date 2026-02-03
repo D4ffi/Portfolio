@@ -17,7 +17,7 @@ const ContactSection: React.FC = () => {
     };
 
     return (
-        <section id="contact" className="py-20 bg-gradient-to-b from-neutral-200 to-mauve dark:from-violet-grey dark:to-violet-russian transition-colors duration-500">
+        <section id="contact" className="py-20 transition-colors duration-500">
             <div className="max-w-4xl mx-auto px-8">
                 {/* Glassmorphism container */}
                 <div className="backdrop-blur-sm bg-white/5 dark:bg-black/10 rounded-3xl border border-white/10 dark:border-white/5 p-8 md:p-12 shadow-xl hover:shadow-2xl hover:bg-white/10 dark:hover:bg-black/15 transition-all duration-500">

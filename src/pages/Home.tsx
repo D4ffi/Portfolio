@@ -1,11 +1,7 @@
 import HeroSection from "../components/hero/HeroSection.tsx";
 import Layout from "../components/common/Layout.tsx";
 import LanguageCard from "../components/common/LanguageCard.tsx";
-import ProjectCard from "../components/common/ProjectCard.tsx";
-import dashboard from '../assets/sesa/dashboard.png';
-import dashboard1 from '../assets/sesa/dashboard1.png';
-import dashboard2 from '../assets/sesa/dashboard2.png';
-import dashboard3 from '../assets/sesa/dashboard3.png';
+import ProjectShowcase from "../components/projects/ProjectShowcase.tsx";
 import ContactSection from "../components/common/ContactSection.tsx";
 import {useLanguage} from "../context/LanguageContext.tsx";
 
@@ -13,13 +9,13 @@ function Home() {
     const { t } = useLanguage();
 
     return (
-        <div className="bg-neutral-200 dark:bg-violet-grey transition-colors duration-500">
+        <div>
             <Layout title="Home">
                 <section id="hero">
                     <HeroSection/>
                 </section>
 
-                <section id="about" className="bg-gradient-to-b from-neutral-200 to-neutral-200 dark:bg-gradient-to-b dark:from-violet-dark dark:to-violet-grey py-16 sm:py-20 md:py-24 lg:py-32 transition-colors duration-500">
+                <section id="about" className="py-16 sm:py-20 md:py-24 lg:py-32 transition-colors duration-500">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex flex-col items-center justify-center text-center">
                             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold mb-6 sm:mb-8 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
@@ -61,28 +57,7 @@ function Home() {
                     </div>
                 </section>
 
-                <section id="projects" className="py-16 sm:py-20 md:py-24 lg:py-32 transition-colors duration-500">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col items-center justify-center text-center">
-                            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 sm:mb-16 md:mb-20 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
-                                {t('projects.title')}
-                            </h1>
-
-                            {/* Projects Container - Always centered regardless of quantity */}
-                            <div className="w-full max-w-7xl">
-                                <div className="flex flex-wrap justify-center gap-8 sm:gap-10 md:gap-12">
-                                    <ProjectCard
-                                        images={[dashboard1, dashboard, dashboard2, dashboard3]}
-                                        title={t('projects.inventory.title')}
-                                        description={t('projects.inventory.description')}
-                                        technologies={['TypeScript','React','TailwindCSS','Supabase']}
-                                    />
-                                    {/* Add more ProjectCard components here as needed */}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <ProjectShowcase />
 
                 {/* Contact Section */}
                 <ContactSection />
