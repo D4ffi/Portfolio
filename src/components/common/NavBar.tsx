@@ -28,7 +28,7 @@ const NavBar: React.FC = () => {
                     <div className="flex-shrink-0">
                         <button
                             onClick={() => handleNavClick('hero')}
-                            className="font-bold text-xl transition-colors duration-700 cursor-pointer text-[#171717] dark:text-[#FCFCFB]"
+                            className="font-bold text-xl transition-colors duration-700 cursor-pointer text-neutral-900 dark:text-neutral-50"
                         >
                             &lt; KOSS /&gt;
                         </button>
@@ -38,19 +38,19 @@ const NavBar: React.FC = () => {
                     <div className="hidden md:flex items-center space-x-8">
                         <button
                             onClick={() => handleNavClick('about')}
-                            className="hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 text-[#171717] dark:text-[#FCFCFB]"
+                            className="hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 text-neutral-900 dark:text-neutral-50"
                         >
                             {t('nav.about')}
                         </button>
                         <button
                             onClick={() => handleNavClick('projects')}
-                            className="hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 text-[#171717] dark:text-[#FCFCFB]"
+                            className="hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 text-neutral-900 dark:text-neutral-50"
                         >
                             {t('nav.projects')}
                         </button>
                         <button
                             onClick={() => handleNavClick('contact')}
-                            className="hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 text-[#171717] dark:text-[#FCFCFB]"
+                            className="hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 text-neutral-900 dark:text-neutral-50"
                         >
                             {t('nav.contact')}
                         </button>
@@ -64,7 +64,7 @@ const NavBar: React.FC = () => {
                         <ToggleDarkMode />
                         <button
                             onClick={toggleMenu}
-                            className="transition-all duration-700 hover:opacity-70 text-[#171717] dark:text-[#FCFCFB]"
+                            className="transition-all duration-700 hover:opacity-70 text-neutral-900 dark:text-neutral-50"
                         >
                             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
@@ -77,19 +77,19 @@ const NavBar: React.FC = () => {
                         <div className="px-4 py-6 space-y-4">
                             <button
                                 onClick={() => handleNavClick('about')}
-                                className="block w-full text-left hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 py-2 text-[#171717] dark:text-[#FCFCFB]"
+                                className="block w-full text-left hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 py-2 text-neutral-900 dark:text-neutral-50"
                             >
                                 {t('nav.about')}
                             </button>
                             <button
                                 onClick={() => handleNavClick('projects')}
-                                className="block w-full text-left hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 py-2 text-[#171717] dark:text-[#FCFCFB]"
+                                className="block w-full text-left hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 py-2 text-neutral-900 dark:text-neutral-50"
                             >
                                 {t('nav.projects')}
                             </button>
                             <button
                                 onClick={() => handleNavClick('contact')}
-                                className="block w-full text-left hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 py-2 text-[#171717] dark:text-[#FCFCFB]"
+                                className="block w-full text-left hover:underline cursor-pointer transition-all duration-700 hover:opacity-70 py-2 text-neutral-900 dark:text-neutral-50"
                             >
                                 {t('nav.contact')}
                             </button>

@@ -38,7 +38,7 @@ const LanguageSelector: React.FC = () => {
             {/* Botón principal */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-2 p-2 rounded-lg hover:bg-white/10 dark:hover:bg-black/10 transition-colors duration-200 text-tekhelet dark:text-tropical-indigo"
+                className="flex items-center gap-2 p-2 rounded-lg hover:bg-neutral-900/10 dark:hover:bg-neutral-50/10 transition-colors duration-200 text-neutral-900 dark:text-neutral-50"
                 aria-label="Select language"
             >
                 <Globe size={20} />
@@ -53,15 +53,15 @@ const LanguageSelector: React.FC = () => {
 
             {/* Dropdown */}
             {isOpen && (
-                <div className="absolute top-full right-0 mt-2 w-40 backdrop-blur-md bg-white/90 dark:bg-violet-russian/90 border border-white/20 dark:border-white/10 rounded-lg shadow-xl z-50 overflow-hidden">
+                <div className="absolute top-full right-0 mt-2 w-40 backdrop-blur-md bg-white/90 dark:bg-neutral-800/90 border border-white/20 dark:border-neutral-600/50 rounded-lg shadow-xl z-50 overflow-hidden">
                     {languages.map((lang) => (
                         <button
                             key={lang.code}
                             onClick={() => handleLanguageChange(lang.code)}
                             className={`w-full px-4 py-3 text-left flex items-center gap-3 transition-colors duration-200 ${
                                 language === lang.code
-                                    ? 'bg-tekhelet/20 dark:bg-tropical-indigo/20 text-tekhelet dark:text-tropical-indigo'
-                                    : 'hover:bg-tekhelet/10 dark:hover:bg-tropical-indigo/10 text-tekhelet dark:text-tropical-indigo'
+                                    ? 'bg-neutral-900/10 dark:bg-neutral-50/20 text-neutral-900 dark:text-neutral-50'
+                                    : 'hover:bg-neutral-900/5 dark:hover:bg-neutral-50/10 text-neutral-900 dark:text-neutral-50'
                             }`}
                         >
                             <span className="text-lg">{lang.flag}</span>
@@ -70,7 +70,7 @@ const LanguageSelector: React.FC = () => {
                                 <span className="text-xs opacity-70">{lang.code.toUpperCase()}</span>
                             </div>
                             {language === lang.code && (
-                                <div className="ml-auto w-2 h-2 bg-tekhelet dark:bg-tropical-indigo rounded-full"></div>
+                                <div className="ml-auto w-2 h-2 bg-neutral-900 dark:bg-neutral-50 rounded-full"></div>
                             )}
                         </button>
                     ))}

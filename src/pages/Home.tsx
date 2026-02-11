@@ -15,27 +15,27 @@ function Home() {
                     <HeroSection/>
                 </section>
 
-                <section id="about" className="py-16 sm:py-20 md:py-24 lg:py-32 transition-colors duration-500">
+                <section id="about" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-bg-light dark:bg-bg-dark transition-colors duration-700">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex flex-col items-center justify-center text-center">
-                            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold mb-6 sm:mb-8 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-neutral-900 dark:text-neutral-50 transition-colors duration-150">
                                 {t('about.title')}
                             </h1>
 
-                            <p className="text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl lg:max-w-2xl text-balance mb-6 sm:mb-8 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
+                            <p className="text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl lg:max-w-2xl text-balance mb-6 sm:mb-8 text-neutral-600 dark:text-neutral-300 transition-colors duration-150">
                                 {t('about.description')}
                             </p>
 
-                            <a className="text-sm sm:text-base hover:underline transition-all duration-500 mb-12 sm:mb-16 md:mb-20 lg:mb-24 text-tekhelet dark:text-tropical-indigo hover:text-tekhelet-dark dark:hover:text-mauve"
+                            <a className="text-sm sm:text-base hover:underline transition-all duration-500 mb-12 sm:mb-16 md:mb-20 lg:mb-24 text-neutral-900 dark:text-neutral-50 hover:text-neutral-600 dark:hover:text-neutral-300"
                                href="https://google.com">
                                 {t('about.mod_link')} --{">"}
                             </a>
 
-                            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold mb-6 sm:mb-8 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold mb-6 sm:mb-8 text-neutral-900 dark:text-neutral-50 transition-colors duration-150">
                                 {t('about.tech_title')}
                             </h2>
 
-                            <p className="text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl lg:max-w-2xl text-balance mb-8 sm:mb-10 md:mb-12 text-tekhelet dark:text-tropical-indigo transition-colors duration-500">
+                            <p className="text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl lg:max-w-2xl text-balance mb-8 sm:mb-10 md:mb-12 text-neutral-600 dark:text-neutral-300 transition-colors duration-150">
                                 {t('about.tech_description')}
                             </p>
 

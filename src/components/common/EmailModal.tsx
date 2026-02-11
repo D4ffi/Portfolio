@@ -91,32 +91,32 @@ const EmailModal: React.FC<EmailModalProps> = ({ isOpen, onClose }) => {
             onClick={handleBackdropClick}
         >
             <div
-                className="bg-white dark:bg-violet-grey rounded-xl shadow-2xl border border-gray-200 dark:border-violet-dark max-w-md w-full mx-4 animate-in fade-in zoom-in duration-200"
+                className="bg-white dark:bg-neutral-900 rounded-xl shadow-2xl border border-gray-200 dark:border-neutral-700 max-w-md w-full mx-4 animate-in fade-in zoom-in duration-200"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-violet-dark">
-                    <h3 className="text-lg font-semibold text-tekhelet dark:text-tropical-indigo">
+                <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-neutral-700">
+                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-50">
                         {t('email.modal.title')}
                     </h3>
                     <button
                         onClick={onClose}
-                        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-violet-dark transition-colors"
+                        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors"
                         aria-label="Close modal"
                     >
-                        <X size={20} className="text-tekhelet dark:text-tropical-indigo" />
+                        <X size={20} className="text-neutral-900 dark:text-neutral-50" />
                     </button>
                 </div>
 
                 {/* Content */}
                 <div className="p-6">
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-tekhelet dark:text-tropical-indigo mb-2">
+                        <label className="block text-sm font-medium text-neutral-900 dark:text-neutral-50 mb-2">
                             {t('email.modal.label')}
                         </label>
                         <div className="flex items-center gap-3">
                             <div
-                                className="flex-1 px-4 py-3 bg-gray-50 dark:bg-violet-dark rounded-lg border border-gray-200 dark:border-violet-russian cursor-pointer hover:bg-gray-100 dark:hover:bg-violet-russian transition-colors"
+                                className="flex-1 px-4 py-3 bg-gray-50 dark:bg-neutral-800 rounded-lg border border-gray-200 dark:border-neutral-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors"
                                 onClick={() => {
                                     // Seleccionar all email text when clicked
                                     const emailElement = document.getElementById('email-text');
@@ -132,13 +132,13 @@ const EmailModal: React.FC<EmailModalProps> = ({ isOpen, onClose }) => {
                                 tabIndex={0}
                                 aria-label="Click to select email address"
                             >
-                                <span id="email-text" className="text-tekhelet dark:text-tropical-indigo font-mono text-sm">
+                                <span id="email-text" className="text-neutral-900 dark:text-neutral-50 font-mono text-sm">
                                     {getEmail()}
                                 </span>
                             </div>
                             <button
                                 onClick={copyToClipboard}
-                                className="px-4 py-3 bg-tekhelet dark:bg-tropical-indigo text-white dark:text-tekhelet-dark rounded-lg hover:bg-tekhelet-dark dark:hover:bg-mauve transition-all duration-200 flex items-center gap-2 font-medium cursor-pointer"
+                                className="px-4 py-3 bg-neutral-900 dark:bg-neutral-50 text-white dark:text-neutral-900 rounded-lg hover:bg-neutral-700 dark:hover:bg-neutral-200 transition-all duration-200 flex items-center gap-2 font-medium cursor-pointer"
                                 aria-label="Copy email address"
                             >
                                 {isCopied ? (
@@ -156,16 +156,16 @@ const EmailModal: React.FC<EmailModalProps> = ({ isOpen, onClose }) => {
                         </div>
                     </div>
 
-                    <p className="text-sm text-gray-600 dark:text-tropical-indigo/80">
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400">
                         {t('email.modal.description')}
                     </p>
                 </div>
 
                 {/* Footer */}
-                <div className="px-6 py-4 bg-gray-50 dark:bg-violet-grey rounded-b-xl">
+                <div className="px-6 py-4 bg-gray-50 dark:bg-neutral-800 rounded-b-xl">
                     <button
                         onClick={onClose}
-                        className="w-full px-4 py-2 dark:text-tropical-indigo bg-gray-50 dark:bg-violet-dark rounded-lg border border-gray-200 dark:border-violet-russian cursor-pointer hover:bg-gray-100 dark:hover:bg-violet-russian transition-colors font-medium"
+                        className="w-full px-4 py-2 text-neutral-900 dark:text-neutral-50 bg-white dark:bg-neutral-700 rounded-lg border border-gray-200 dark:border-neutral-600 cursor-pointer hover:bg-gray-50 dark:hover:bg-neutral-600 transition-colors font-medium"
                     >
                         {t('email.modal.close')}
                     </button>

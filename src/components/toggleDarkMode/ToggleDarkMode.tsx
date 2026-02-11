@@ -114,9 +114,9 @@ const ToggleDarkMode: React.FC = () => {
             aria-label={isDarkMode ? t('theme.light') : t('theme.dark')}
         >
             {isDarkMode ? (
-                <MoonIcon className="w-6 h-6 text-tropical-indigo hover:text-violet-100 cursor-pointer transition-colors duration-200" />
+                <MoonIcon className="w-6 h-6 text-neutral-50 hover:text-neutral-300 cursor-pointer transition-colors duration-200" />
             ) : (
-                <SunIcon className="w-6 h-6 text-tekhelet hover:text-tekhelet-dark cursor-pointer transition-colors duration-200" />
+                <SunIcon className="w-6 h-6 text-neutral-900 hover:text-neutral-600 cursor-pointer transition-colors duration-200" />
             )}
         </button>
     );
