@@ -3,24 +3,36 @@ import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext.tsx";
 
 type Tech = { name: string; logo: string };
-type Job = { company: string; role: string; stack: Tech[] };
+type Period = { year: number; month: number }; // month: 0 = enero
+type Job = {
+  company: string;
+  role: string;
+  start: Period;
+  end: Period | null; // null = trabajo actual
+  stack: Tech[];
+};
 
-/* Experiencia — cada trabajo con su stack. Los roles se dejan en inglés
-   (convención en perfiles técnicos); las empresas son nombres propios. */
+/* Experiencia — orden cronológico inverso (lo más reciente primero, como
+   en un CV). Los roles se dejan en inglés (convención en perfiles técnicos);
+   las empresas son nombres propios. */
 const EXPERIENCE: Job[] = [
   {
-    company: "Hutchison Ports Icave",
-    role: "Cloud Engineer Intern",
+    company: "Griver",
+    role: "AI Engineer",
+    start: { year: 2026, month: 4 },
+    end: null,
     stack: [
-      { name: ".NET", logo: "dotnet.svg" },
-      { name: "C#", logo: "csharp.svg" },
       { name: "JavaScript", logo: "javascript.svg" },
-      { name: "Google Cloud", logo: "googlecloud.svg" },
+      { name: "Python", logo: "python.svg" },
+      { name: "n8n", logo: "n8n.svg" },
+      { name: "AWS", logo: "aws.svg" },
     ],
   },
   {
     company: "Ficachi Consultores",
     role: "Backend Engineer",
+    start: { year: 2025, month: 8 },
+    end: { year: 2026, month: 2 },
     stack: [
       { name: "Java", logo: "java.svg" },
       { name: "Spring Boot", logo: "spring.svg" },
@@ -29,16 +41,30 @@ const EXPERIENCE: Job[] = [
     ],
   },
   {
-    company: "Griver",
-    role: "AI Engineer",
+    company: "Hutchison Ports Icave",
+    role: "Cloud Engineer Intern",
+    start: { year: 2024, month: 8 },
+    end: { year: 2025, month: 2 },
     stack: [
+      { name: ".NET", logo: "dotnet.svg" },
+      { name: "C#", logo: "csharp.svg" },
       { name: "JavaScript", logo: "javascript.svg" },
-      { name: "Python", logo: "python.svg" },
-      { name: "n8n", logo: "n8n.svg" },
-      { name: "AWS", logo: "aws.svg" },
+      { name: "Google Cloud", logo: "googlecloud.svg" },
     ],
   },
 ];
+
+/* "sep 2024" — mes abreviado + año, localizado según el idioma activo. */
+const monthYear = (p: Period, language: string) =>
+  new Intl.DateTimeFormat(language, { month: "short", year: "numeric" }).format(
+    new Date(p.year, p.month),
+  );
+
+/* "sep 2024 – mar 2025" / "may 2026 – Actualidad" */
+const formatPeriod = (job: Job, language: string, present: string) =>
+  `${monthYear(job.start, language)} – ${
+    job.end ? monthYear(job.end, language) : present
+  }`;
 
 /* Bloque que aparece con fade + lift cuando la sección entra en viewport.
    La animación vive en index.css (.reveal); aquí solo se conmuta la clase
@@ -97,10 +123,11 @@ const TechItem: React.FC<Tech> = ({ name, logo }) => (
   </li>
 );
 
-/* Entrada de experiencia: empresa + rol + fila de logos del stack.
+/* Entrada de experiencia: empresa + periodo + rol + fila de logos del stack.
    `divider` añade una regla hairline superior entre trabajos. */
-const JobEntry: React.FC<{ job: Job; divider: boolean }> = ({
+const JobEntry: React.FC<{ job: Job; period: string; divider: boolean }> = ({
   job,
+  period,
   divider,
 }) => (
   <article
@@ -108,9 +135,14 @@ const JobEntry: React.FC<{ job: Job; divider: boolean }> = ({
       divider ? "border-t border-neutral-200 pt-10 dark:border-neutral-800" : ""
     }
   >
-    <h4 className="text-lg font-semibold tracking-[-0.01em] text-neutral-900 dark:text-neutral-50 sm:text-xl">
-      {job.company}
-    </h4>
+    <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+      <h4 className="text-lg font-semibold tracking-[-0.01em] text-neutral-900 dark:text-neutral-50 sm:text-xl">
+        {job.company}
+      </h4>
+      <span className="text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-neutral-400 dark:text-neutral-500">
+        {period}
+      </span>
+    </div>
     <p className="mt-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500">
       {job.role}
     </p>
@@ -123,7 +155,7 @@ const JobEntry: React.FC<{ job: Job; divider: boolean }> = ({
 );
 
 const AboutSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -229,7 +261,11 @@ const AboutSection: React.FC = () => {
             delay={350 + i * 70}
             className={i === 0 ? "mt-10" : ""}
           >
-            <JobEntry job={job} divider={i > 0} />
+            <JobEntry
+              job={job}
+              period={formatPeriod(job, language, t("about.present"))}
+              divider={i > 0}
+            />
           </Reveal>
         ))}
       </div>

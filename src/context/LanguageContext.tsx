@@ -28,6 +28,7 @@ const translations = {
         'about.description': 'I am Kevin Coss, I started this journey as a software developer because of Minecraft! Creating modpacks, editing configs, making datapacks, and even developing my own mod with Java—the rest is history. Now, I\'m on this software development path, and I love it, from planning and developing to publishing.',
         'about.mod_link': 'See my Mod dev page',
         'about.tech_title': 'Stack & Tools',
+        'about.present': 'Present',
 
         // Projects Section
         'projects.title': 'Projects',
@@ -75,6 +76,7 @@ const translations = {
         'about.description': 'Soy Kevin Coss y ¡Comencé este viaje como desarrollador de software por Minecraft! Creando modpacks, editando configuraciones, haciendo datapacks, e incluso desarrollando mi propio mod con Java—el resto es historia. Ahora, estoy en este camino del desarrollo de software, y me encanta, desde planificar y desarrollar hasta publicar.',
         'about.mod_link': 'Ver mi página de desarrollo de Mods',
         'about.tech_title': 'Stack y Herramientas',
+        'about.present': 'Actualidad',
 
         // Projects Section
         'projects.title': 'Proyectos',

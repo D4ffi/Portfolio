@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, ChevronLeft, ChevronRight, LayoutGrid } from 'lucide-react';
 
 interface Project {
   id: string;
@@ -83,10 +83,27 @@ const projects: Project[] = [
   }
 ];
 
+/* Icono del proyecto: ruta de imagen para los proyectos 1/2/5, null si usa emoji. */
+const iconSrc = (p: Project): string | null => {
+  if (p.id === '1') return '/allay/profile.png';
+  if (p.id === '2') return '/catssets/logo dr wako.svg';
+  if (p.id === '5') return p.logo;
+  return null;
+};
+
 const ProjectShowcase: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project>(projects[0]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isDark, setIsDark] = useState(false);
+
+  // Estado del rail de proyectos (colapsado por defecto; se expande al hover).
+  const [railHovered, setRailHovered] = useState(false);
+  const [railFocused, setRailFocused] = useState(false);
+  const [clickCollapsed, setClickCollapsed] = useState(false);
+  const [canHover, setCanHover] = useState(true);
+
+  // En táctil no hay hover: el rail queda expandido y dentro del flujo normal.
+  const railExpanded = !canHover || railFocused || (railHovered && !clickCollapsed);
 
   useEffect(() => {
     // Detectar el tema inicial
@@ -113,9 +130,19 @@ const ProjectShowcase: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Detecta si el dispositivo puede hacer hover (escritorio vs táctil).
+  useEffect(() => {
+    const mq = window.matchMedia('(hover: hover)');
+    const update = () => setCanHover(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   const handleProjectSelect = (project: Project) => {
     setSelectedProject(project);
     setCurrentImageIndex(0);
+    setClickCollapsed(true); // al elegir, el rail se contrae aunque el mouse siga encima
   };
 
   const nextImage = () => {
@@ -140,50 +167,115 @@ const ProjectShowcase: React.FC = () => {
       }}
     >
 
-      {/* Project List Sidebar */}
-      <div className="w-80 flex-shrink-0 p-8 relative z-10 flex flex-col justify-center">
-        <div className="space-y-2">
-          <h2 className="text-sm font-bold tracking-widest mb-8 text-neutral-900/60 dark:text-neutral-50/60 transition-colors duration-150">
-            PROJECTS
-          </h2>
+      {/* Spacer: reserva el ancho del rail colapsado (solo en escritorio, donde el rail flota sobre el contenido) */}
+      {canHover && <div className="w-20 flex-shrink-0" aria-hidden="true" />}
 
-          {projects.map((project) => (
-            <button
-              key={project.id}
-              onClick={() => handleProjectSelect(project)}
-              className={`
-                w-full text-left px-6 py-4 rounded-2xl transition-all duration-500 group
-                ${selectedProject.id === project.id
-                  ? 'bg-white/20 backdrop-blur-md shadow-xl scale-105'
-                  : 'hover:bg-white/10 backdrop-blur-sm hover:scale-102'
-                }
-              `}
+      {/* Rail de proyectos — colapsado (solo iconos); se expande al pasar el
+          mouse o al enfocar con teclado, y se contrae al elegir un proyecto. */}
+      <aside
+        aria-label="Projects"
+        onMouseEnter={() => setRailHovered(true)}
+        onMouseLeave={() => {
+          setRailHovered(false);
+          setClickCollapsed(false);
+        }}
+        onFocus={(e) => {
+          if ((e.target as HTMLElement).matches(':focus-visible')) {
+            setRailFocused(true);
+          }
+        }}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+            setRailFocused(false);
+          }
+        }}
+        className={`flex flex-col justify-center flex-shrink-0 overflow-hidden border-r
+                    border-neutral-200 bg-bg-light transition-[width,box-shadow]
+                    duration-300 ease-[cubic-bezier(.2,.8,.2,1)] dark:border-neutral-800
+                    dark:bg-bg-dark motion-reduce:transition-none
+                    ${canHover ? 'absolute inset-y-0 left-0 z-20' : 'relative'}
+                    ${railExpanded ? 'w-[272px]' : 'w-20'}
+                    ${canHover && railExpanded ? 'shadow-2xl shadow-black/10 dark:shadow-black/40' : ''}`}
+      >
+        <div className="flex flex-col gap-1 px-2.5">
+          {/* Encabezado */}
+          <div className="mb-3 flex items-center gap-3 px-2.5">
+            <span className="flex w-10 shrink-0 justify-center">
+              <LayoutGrid size={18} strokeWidth={2} className="text-neutral-400 dark:text-neutral-500" />
+            </span>
+            <span
+              aria-hidden="true"
+              className={`whitespace-nowrap text-xs font-semibold uppercase tracking-[0.2em]
+                          text-neutral-400 transition-opacity duration-200 dark:text-neutral-500
+                          ${railExpanded ? 'opacity-100 delay-75' : 'opacity-0'}`}
             >
-              <div className="flex items-center gap-4">
-                {project.id === '1' || project.id === '2' || project.id === '5' ? (
-                  <img 
-                    src={project.id === '1' ? "/allay/profile.png" : project.id === '2' ? "/catssets/logo dr wako.svg" : project.logo}
-                    alt={project.name}
-                    className="w-10 h-10 rounded-lg object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                ) : (
-                  <span className="text-3xl transition-transform duration-300 group-hover:scale-110">
-                    {project.logo}
-                  </span>
-                )}
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg text-neutral-900 dark:text-neutral-50 transition-colors duration-150">
-                    {project.name}
-                  </h3>
-                </div>
-                {selectedProject.id === project.id && (
-                  <div className="w-2 h-2 rounded-full bg-neutral-900 dark:bg-neutral-50 transition-all duration-500" />
-                )}
-              </div>
-            </button>
-          ))}
+              Projects
+            </span>
+          </div>
+
+          {/* Lista de proyectos */}
+          {projects.map((project) => {
+            const src = iconSrc(project);
+            const active = selectedProject.id === project.id;
+            return (
+              <button
+                key={project.id}
+                aria-label={project.name}
+                aria-current={active ? 'true' : undefined}
+                onClick={() => handleProjectSelect(project)}
+                className={`group relative flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5
+                            outline-none transition-colors duration-150 focus-visible:ring-2
+                            focus-visible:ring-inset focus-visible:ring-tropical-indigo
+                            motion-reduce:transition-none
+                            ${active
+                              ? 'bg-black/[0.055] dark:bg-white/[0.07]'
+                              : 'hover:bg-black/[0.035] dark:hover:bg-white/[0.05]'}`}
+              >
+                {/* Barra de acento del proyecto activo (visible colapsado y expandido) */}
+                <span
+                  aria-hidden="true"
+                  className={`absolute left-0 top-1/2 h-7 w-[3px] -translate-y-1/2 rounded-r-full
+                              bg-tekhelet transition-opacity duration-200 dark:bg-tropical-indigo
+                              motion-reduce:transition-none ${active ? 'opacity-100' : 'opacity-0'}`}
+                />
+
+                {/* Icono */}
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center">
+                  {src ? (
+                    <img
+                      src={src}
+                      alt=""
+                      className="h-10 w-10 rounded-lg object-cover transition-transform duration-200
+                                 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105
+                                 motion-reduce:transition-none"
+                    />
+                  ) : (
+                    <span
+                      aria-hidden="true"
+                      className="text-3xl leading-none transition-transform duration-200
+                                 group-hover:scale-105 motion-reduce:transition-none"
+                    >
+                      {project.logo}
+                    </span>
+                  )}
+                </span>
+
+                {/* Nombre — se revela al expandir el rail */}
+                <span
+                  aria-hidden="true"
+                  className={`whitespace-nowrap text-sm font-medium transition-opacity duration-200
+                              ${active
+                                ? 'text-neutral-900 dark:text-neutral-50'
+                                : 'text-neutral-500 dark:text-neutral-400'}
+                              ${railExpanded ? 'opacity-100 delay-75' : 'opacity-0'}`}
+                >
+                  {project.name}
+                </span>
+              </button>
+            );
+          })}
         </div>
-      </div>
+      </aside>
 
       {/* Main Content Area */}
       <div className="flex-1 flex items-center justify-center p-12 relative z-10">
@@ -192,7 +284,7 @@ const ProjectShowcase: React.FC = () => {
           <div className="mb-12 animate-fadeIn">
             <div className="flex items-center gap-6 mb-6">
               {selectedProject.id === '1' || selectedProject.id === '2' || selectedProject.id === '5' ? (
-                <img 
+                <img
                   src={selectedProject.id === '1' ? "/allay/profile.png" : selectedProject.id === '2' ? "/catssets/logo dr wako.svg" : selectedProject.logo}
                   alt={selectedProject.name}
                   className="w-24 h-24 rounded-2xl object-cover"
