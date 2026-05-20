@@ -138,7 +138,7 @@ Dark mode state is managed by:
 
 ## AWS Amplify
 
-The project includes AWS Amplify dependencies (`aws-amplify`, `@aws-amplify/backend`, etc.) for potential backend features, but no active Amplify configuration is currently in use.
+The project is a **frontend-only** SPA. AWS Amplify is used purely for **hosting** (build config in `amplify.yml`). No Amplify SDK or backend packages are installed — `aws-amplify`, `@aws-amplify/backend`, `@aws-amplify/backend-cli`, `aws-cdk-lib`, `constructs` and `tsx` were removed because they were unused and accounted for ~90 npm vulnerabilities. If a backend is needed later, install the required Amplify packages at that point.
 
 ## File Naming Conventions
 

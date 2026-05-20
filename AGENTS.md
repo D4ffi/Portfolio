@@ -265,7 +265,7 @@ No environment variables are currently configured. The project uses static confi
 
 ## Dependencies Notes
 
-**AWS Amplify packages** (`aws-amplify`, `@aws-amplify/backend`) are included but no active backend configuration is in use. The project is purely frontend-hosted on Amplify.
+**AWS Amplify** is used only for **hosting** (build config in `amplify.yml`). No Amplify SDK or backend packages are installed — `aws-amplify`, `@aws-amplify/backend`, `@aws-amplify/backend-cli`, `aws-cdk-lib`, `constructs` and `tsx` were removed as unused (they accounted for ~90 npm vulnerabilities). Add the required Amplify packages only if a backend is actually built.
 
 **Three.js packages** (`three`, `@react-three/fiber`, `@react-three/drei`) are included as dependencies but not actively used in the current component set. The ProjectShowcase component contains placeholder 3D content.
 

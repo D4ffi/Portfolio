@@ -9,7 +9,7 @@ This is a personal portfolio website built as a Single-Page Application (SPA). I
 - **Styling:** Tailwind CSS v4 (configured via CSS variables in `src/index.css`)
 - **3D Graphics:** Three.js, React Three Fiber, React Three Drei
 - **Icons:** Lucide React
-- **Backend/Hosting:** AWS Amplify dependencies are present (`aws-amplify`, `@aws-amplify/backend`), though currently noted as potentially unused for active features.
+- **Hosting:** AWS Amplify (hosting only — build config in `amplify.yml`). No Amplify SDK or backend packages are installed; they were removed as unused. The project is frontend-only.
 
 ## Key Files & Directories
 - **`src/main.tsx`**: Application entry point. Wraps the app in `LanguageProvider`.
