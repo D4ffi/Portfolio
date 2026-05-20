@@ -214,3 +214,64 @@ body.transitions-enabled .no-transition {
 .hover\:scale-102:hover {
   transform: scale(1.02);
 }
+
+/* ===== About — reveal editorial (firma de movimiento: fade + lift) =====
+   Cada bloque arranca oculto y sube al entrar en viewport. El stagger se
+   controla por --reveal-delay desde el componente. */
+@keyframes about-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: about-rise 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+/* Sin movimiento: el contenido aparece de inmediato, sin animación. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+  }
+  .reveal.is-visible {
+    animation: none;
+  }
+}
+
+/* Logo de stack: silueta monocroma en reposo, color de marca pleno al hover
+   del item. brightness(0) aplana cualquier logo a negro; +invert(1) lo pasa
+   a blanco para modo oscuro. Así funciona igual en ambos temas sin importar
+   el color original del logo. */
+.tech-logo {
+  filter: brightness(0);
+  opacity: 0.5;
+  transition:
+    filter 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.dark .tech-logo {
+  filter: brightness(0) invert(1);
+  opacity: 0.55;
+}
+
+.group:hover .tech-logo {
+  filter: none;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-logo {
+    transition: none;
+  }
+}

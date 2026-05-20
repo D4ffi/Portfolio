@@ -23,11 +23,11 @@ const translations = {
         'hero.easter_egg': 'If you read this, you are awesome',
 
         // About Section
-        'about.title': 'A little about me',
+        'about.label': 'About',
+        'about.lead': 'It started with Minecraft.',
         'about.description': 'I am Kevin Coss, I started this journey as a software developer because of Minecraft! Creating modpacks, editing configs, making datapacks, and even developing my own mod with Java—the rest is history. Now, I\'m on this software development path, and I love it, from planning and developing to publishing.',
         'about.mod_link': 'See my Mod dev page',
-        'about.tech_title': 'Tech Stack & Tools',
-        'about.tech_description': 'I have experience with a variety of technologies and tools, including Java, JavaScript, TypeScript, React, Node.js, Express, MongoDB, PostgreSQL, and more. I also have experience with cloud platforms like AWS and GCP.',
+        'about.tech_title': 'Stack & Tools',
 
         // Projects Section
         'projects.title': 'Projects',
@@ -70,11 +70,11 @@ const translations = {
         'hero.easter_egg': 'Si lees esto, eres increíble',
 
         // About Section
-        'about.title': 'Un poco sobre mí',
+        'about.label': 'Sobre mí',
+        'about.lead': 'Todo empezó con Minecraft.',
         'about.description': 'Soy Kevin Coss y ¡Comencé este viaje como desarrollador de software por Minecraft! Creando modpacks, editando configuraciones, haciendo datapacks, e incluso desarrollando mi propio mod con Java—el resto es historia. Ahora, estoy en este camino del desarrollo de software, y me encanta, desde planificar y desarrollar hasta publicar.',
         'about.mod_link': 'Ver mi página de desarrollo de Mods',
-        'about.tech_title': 'Stack Tecnológico y Herramientas',
-        'about.tech_description': 'Tengo experiencia con una variedad de tecnologías y herramientas, incluyendo Java, JavaScript, TypeScript, React, Node.js, Express, MongoDB, PostgreSQL, y más. También tengo experiencia con plataformas en la nube como AWS y GCP.',
+        'about.tech_title': 'Stack y Herramientas',
 
         // Projects Section
         'projects.title': 'Proyectos',

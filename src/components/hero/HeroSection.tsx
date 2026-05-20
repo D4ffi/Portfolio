@@ -5,6 +5,7 @@ const HeroSection: React.FC = () => {
   const gradientRef = useRef<HTMLDivElement>(null);
   const lightImageRef = useRef<HTMLImageElement>(null);
   const darkImageRef = useRef<HTMLImageElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Detectar el tema inicial
@@ -37,7 +38,8 @@ const HeroSection: React.FC = () => {
       if (
         !gradientRef.current ||
         !lightImageRef.current ||
-        !darkImageRef.current
+        !darkImageRef.current ||
+        !textRef.current
       )
         return;
 
@@ -69,6 +71,14 @@ const HeroSection: React.FC = () => {
       } else {
         lightImageRef.current.style.opacity = imageOpacity.toString();
       }
+
+      // Texto "Koss": sube y se desvanece al hacer scroll hacia abajo.
+      // Como todo depende de scrollY, al subir el scroll la animación
+      // se revierte sola (el texto baja y reaparece).
+      const textThreshold = 350;
+      const textProgress = Math.min(scrollY / textThreshold, 1);
+      textRef.current.style.opacity = (1 - textProgress).toString();
+      textRef.current.style.transform = `translateY(${-textProgress * 100}px)`;
     };
 
     // Ejecutar al montar
@@ -116,18 +126,35 @@ const HeroSection: React.FC = () => {
         }}
       />
 
-      {/* Texto "Koss" */}
-      <h1
-        className="hero-text text-9xl font-serif tracking-wider z-10 relative transition-colors duration-700"
+      {/* Texto "Koss".
+          Wrapper exterior -> animación de SALIDA por scroll (la controla el JS).
+          <h1> interior     -> animación de ENTRADA `breathe` (CSS, intacta).
+          Van en elementos separados porque una animación CSS pisa los estilos
+          inline; si compartieran elemento el scroll no podría moverlo. */}
+      <div
+        ref={textRef}
+        className="z-10 relative"
         style={{
-          color: isDark ? "#FCFCFB" : "#171717",
-          fontFamily: '"Playfair Display", serif',
-          fontWeight: 700,
-          letterSpacing: "0.15em",
+          willChange: "transform, opacity",
+          // Sin transición: transform y opacity deben seguir el scroll 1:1
+          // (anula la regla global body.transitions-enabled *).
+          transition: "none",
         }}
       >
-        Koss
-      </h1>
+        <h1
+          className="hero-text text-9xl font-serif tracking-wider"
+          style={{
+            color: isDark ? "#FCFCFB" : "#171717",
+            fontFamily: '"Playfair Display", serif',
+            fontWeight: 700,
+            letterSpacing: "0.15em",
+            // Solo transicionamos el color (cambio de tema).
+            transition: "color 700ms ease-in-out",
+          }}
+        >
+          Koss
+        </h1>
+      </div>
     </div>
   );
 };
