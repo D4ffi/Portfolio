@@ -13,16 +13,70 @@ interface Project {
   images: string[];
   url: string;
   textColor: string;
+  hidden?: boolean;
 }
+
+interface SkoposSlide {
+  src: string;
+  alt: string;
+  eyebrow: string;
+  caption: string;
+}
+
+const skoposSlides: SkoposSlide[] = [
+  {
+    src: '/skopos/skopos-rpl.png',
+    alt: 'Skopos interactive REPL',
+    eyebrow: 'Interactive REPL',
+    caption: 'Local-first cockpit — commands, usage and costs in one place.',
+  },
+  {
+    src: '/skopos/skopos-code.png',
+    alt: 'Skopos project picker',
+    eyebrow: 'Project picker',
+    caption: 'Jump between repos and providers without leaving the terminal.',
+  },
+  {
+    src: '/skopos/skopos-network.png',
+    alt: 'Skopos network monitor',
+    eyebrow: 'Network monitor',
+    caption: 'Latency, outages and link history at a glance.',
+  },
+  {
+    src: '/skopos/skopos-usage.png',
+    alt: 'Skopos usage and limits',
+    eyebrow: 'Usage & limits',
+    caption: 'Tokens, costs and reset windows per provider.',
+  },
+  {
+    src: '/skopos/skopos-pallete.png',
+    alt: 'Skopos palette and profiles',
+    eyebrow: 'Palette & profiles',
+    caption: 'Swap themes and scoped profiles on the fly.',
+  },
+];
 
 const projects: Project[] = [
   {
-    id: '1',
+    id: 'skopos',
+    name: 'Skopos',
+    color: '#7C3AED',
+    gradientFrom: '#7C3AED',
+    gradientTo: '#4C1D95',
+    logo: '/skopos/skopos-logo.png',
+    title: 'Skopos',
+    description: 'Local-first observability for AI usage. A Rust CLI that tracks tokens, costs, and rate limits across Claude Code, Codex, Gemini and Hermes from a single terminal-native workflow.',
+    images: [],
+    url: 'https://skopos.bydaffi.com',
+    textColor: '#4C1D95'
+  },
+  {
+    id: 'ally',
     name: 'Ally DSM',
     color: '#8B5CF6',
     gradientFrom: '#8B5CF6',
     gradientTo: '#7C3AED',
-    logo: '🪚',
+    logo: '/allay/profile.png',
     title: 'Ally DSM',
     description: 'Digital platform designed to support individuals with Dravet Syndrome and their families. Provides educational resources, community connection, and tools for managing daily care and treatment.',
     images: ['/allay/allay-img-0.webp', '/allay/allay-img-1.webp'],
@@ -30,46 +84,49 @@ const projects: Project[] = [
     textColor: '#5B21B6'
   },
   {
-    id: '2',
+    id: 'footprint',
+    name: 'Footprint',
+    color: '#A855F7',
+    gradientFrom: '#A855F7',
+    gradientTo: '#7E22CE',
+    logo: '🦶',
+    title: 'Footprint',
+    description: 'Personal map web app for marking and remembering the places you have visited. Custom marker types, photo memories, a radial category search, and a shared "lazo" mode for couples — built with React, Firebase, and Google Maps.',
+    images: [],
+    url: '#',
+    textColor: '#581C87',
+    hidden: true
+  },
+  {
+    id: 'catssets',
     name: 'Catssets',
     color: '#F59E0B',
     gradientFrom: '#F59E0B',
     gradientTo: '#D97706',
-    logo: '🐱',
+    logo: '/catssets/logo dr wako.svg',
     title: 'Catssets',
     description: 'A delightful cat-themed asset management platform. Organize, preview, and share your digital assets with a playful feline-inspired interface.',
     images: ['/placeholder-1.jpg', '/placeholder-2.jpg'],
     url: '#',
-    textColor: '#92400E'
+    textColor: '#92400E',
+    hidden: true
   },
   {
-    id: '3',
-    name: 'Violet Dream',
-    color: '#A855F7',
-    gradientFrom: '#A855F7',
-    gradientTo: '#9333EA',
-    logo: '✨',
-    title: 'Violet Dream Engine',
-    description: 'Next-generation 3D rendering engine with unparalleled performance. Built for creators who demand excellence and precision in every frame.',
-    images: ['/placeholder-1.jpg', '/placeholder-2.jpg', '/placeholder-3.jpg', '/placeholder-4.jpg'],
+    id: 'otter-finance',
+    name: 'Otter Finance',
+    color: '#0EA5E9',
+    gradientFrom: '#0EA5E9',
+    gradientTo: '#0369A1',
+    logo: '🦦',
+    title: 'Otter Finance',
+    description: 'Personal finance app focused on helping users take control of their money: expense tracking, credit history, provisional tax filings, invoicing, and more — all in one place.',
+    images: [],
     url: '#',
-    textColor: '#581C87'
+    textColor: '#0C4A6E',
+    hidden: true
   },
   {
-    id: '4',
-    name: 'Obsidian Core',
-    color: '#1F2937',
-    gradientFrom: '#1F2937',
-    gradientTo: '#111827',
-    logo: '⚫',
-    title: 'Obsidian Core Systems',
-    description: 'Enterprise-grade infrastructure management platform. Robust, secure, and scalable solutions for mission-critical operations.',
-    images: ['/placeholder-1.jpg'],
-    url: '#',
-    textColor: '#F9FAFB'
-  },
-  {
-    id: '5',
+    id: 'tarot',
     name: 'Okiro Tarot Cards Mod',
     color: '#F97316',
     gradientFrom: '#F97316',
@@ -83,16 +140,17 @@ const projects: Project[] = [
   }
 ];
 
-/* Icono del proyecto: ruta de imagen para los proyectos 1/2/5, null si usa emoji. */
-const iconSrc = (p: Project): string | null => {
-  if (p.id === '1') return '/allay/profile.png';
-  if (p.id === '2') return '/catssets/logo dr wako.svg';
-  if (p.id === '5') return p.logo;
-  return null;
-};
+/* Si `logo` empieza con `/` es un asset (imagen); si no, es un emoji. */
+const iconSrc = (p: Project): string | null => (p.logo.startsWith('/') ? p.logo : null);
+
+/* Proyectos cuyas galerías usan controles claros sobre imágenes oscuras/saturadas. */
+const hasDarkGallery = (id: string) => id === 'ally' || id === 'catssets';
+
+/* Visibles en el showcase. Toggle `hidden: true` para ocultar en producción. */
+const visibleProjects = projects.filter((p) => !p.hidden);
 
 const ProjectShowcase: React.FC = () => {
-  const [selectedProject, setSelectedProject] = useState<Project>(projects[0]);
+  const [selectedProject, setSelectedProject] = useState<Project>(visibleProjects[0]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isDark, setIsDark] = useState(false);
 
@@ -214,7 +272,7 @@ const ProjectShowcase: React.FC = () => {
           </div>
 
           {/* Lista de proyectos */}
-          {projects.map((project) => {
+          {visibleProjects.map((project) => {
             const src = iconSrc(project);
             const active = selectedProject.id === project.id;
             return (
@@ -283,9 +341,9 @@ const ProjectShowcase: React.FC = () => {
           {/* Project Details */}
           <div className="mb-12 animate-fadeIn">
             <div className="flex items-center gap-6 mb-6">
-              {selectedProject.id === '1' || selectedProject.id === '2' || selectedProject.id === '5' ? (
+              {iconSrc(selectedProject) ? (
                 <img
-                  src={selectedProject.id === '1' ? "/allay/profile.png" : selectedProject.id === '2' ? "/catssets/logo dr wako.svg" : selectedProject.logo}
+                  src={iconSrc(selectedProject)!}
                   alt={selectedProject.name}
                   className="w-24 h-24 rounded-2xl object-cover"
                 />
@@ -306,16 +364,22 @@ const ProjectShowcase: React.FC = () => {
               {selectedProject.description}
             </p>
 
-            <button
-              onClick={() => window.open(selectedProject.url, '_blank')}
-              className="group px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-500 flex items-center gap-3 hover:gap-5 backdrop-blur-md hover:scale-105 shadow-lg hover:shadow-2xl cursor-pointer bg-black/10 dark:bg-white/20 text-neutral-900 dark:text-neutral-50 border-2 border-black/20 dark:border-white/30"
-            >
-              Visit Project
-              <ExternalLink size={20} className="transition-transform duration-300 group-hover:rotate-12" />
-            </button>
+            {selectedProject.url && selectedProject.url !== '#' ? (
+              <button
+                onClick={() => window.open(selectedProject.url, '_blank')}
+                className="group px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-500 flex items-center gap-3 hover:gap-5 backdrop-blur-md hover:scale-105 shadow-lg hover:shadow-2xl cursor-pointer bg-black/10 dark:bg-white/20 text-neutral-900 dark:text-neutral-50 border-2 border-black/20 dark:border-white/30"
+              >
+                Visit Project
+                <ExternalLink size={20} className="transition-transform duration-300 group-hover:rotate-12" />
+              </button>
+            ) : (
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium tracking-wide text-neutral-500 dark:text-neutral-400 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10">
+                Coming soon
+              </span>
+            )}
 
             {/* Title Image for Okiro Tarot */}
-            {selectedProject.id === '5' && (
+            {selectedProject.id === 'tarot' && (
               <div className="mt-8 w-full">
                 <img
                   src="/tarot/tittle.png"
@@ -324,13 +388,74 @@ const ProjectShowcase: React.FC = () => {
                 />
               </div>
             )}
+
           </div>
+
+          {/* Skopos carousel: REPL first, then project picker, network, usage,
+              palette. Screenshots have dark backgrounds and varied aspect ratios,
+              so we use object-contain on a near-black canvas with a per-slide
+              caption (light text, violet eyebrow). */}
+          {selectedProject.id === 'skopos' && (() => {
+            const slide = skoposSlides[currentImageIndex % skoposSlides.length];
+            const goNext = () => setCurrentImageIndex((prev) => (prev + 1) % skoposSlides.length);
+            const goPrev = () => setCurrentImageIndex((prev) => (prev - 1 + skoposSlides.length) % skoposSlides.length);
+            return (
+              <div className="relative group/gallery mx-auto">
+                <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-neutral-950">
+                  <img
+                    key={slide.src}
+                    src={slide.src}
+                    alt={slide.alt}
+                    className="absolute inset-0 w-full h-full object-contain animate-fadeIn"
+                  />
+
+                  {/* Caption strip */}
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent px-6 py-5">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-violet-300/90">
+                      {slide.eyebrow}
+                    </p>
+                    <p className="mt-1 text-sm text-white/90">{slide.caption}</p>
+                  </div>
+
+                  {/* Navigation arrows */}
+                  <button
+                    onClick={goPrev}
+                    aria-label="Previous screenshot"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full backdrop-blur-md transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg bg-white/15 text-white cursor-pointer"
+                  >
+                    <ChevronLeft size={24} />
+                  </button>
+                  <button
+                    onClick={goNext}
+                    aria-label="Next screenshot"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full backdrop-blur-md transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg bg-white/15 text-white cursor-pointer"
+                  >
+                    <ChevronRight size={24} />
+                  </button>
+
+                  {/* Dots */}
+                  <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2">
+                    {skoposSlides.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentImageIndex(index)}
+                        aria-label={`Go to slide ${index + 1}`}
+                        className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                          index === currentImageIndex ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:scale-125'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Image Gallery */}
           {selectedProject.images.length > 0 && (
             <div className="relative group/gallery mx-auto">
               <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm bg-white/10 border border-white/20">
-                {selectedProject.id !== '1' && selectedProject.id !== '2' && selectedProject.id !== '5' && (
+                {!iconSrc(selectedProject) && (
                   <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none text-neutral-900 dark:text-neutral-50">
                     <span className="text-9xl">{selectedProject.logo}</span>
                   </div>
@@ -347,13 +472,13 @@ const ProjectShowcase: React.FC = () => {
                   <>
                     <button
                       onClick={prevImage}
-                      className={`absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full backdrop-blur-md transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg bg-black/20 dark:bg-white/20 cursor-pointer ${selectedProject.id === '1' || selectedProject.id === '2' ? 'text-white' : 'text-neutral-900 dark:text-neutral-50'}`}
+                      className={`absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full backdrop-blur-md transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg bg-black/20 dark:bg-white/20 cursor-pointer ${hasDarkGallery(selectedProject.id) ? 'text-white' : 'text-neutral-900 dark:text-neutral-50'}`}
                     >
                       <ChevronLeft size={24} />
                     </button>
                     <button
                       onClick={nextImage}
-                      className={`absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full backdrop-blur-md transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg bg-black/20 dark:bg-white/20 cursor-pointer ${selectedProject.id === '1' || selectedProject.id === '2' ? 'text-white' : 'text-neutral-900 dark:text-neutral-50'}`}
+                      className={`absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full backdrop-blur-md transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg bg-black/20 dark:bg-white/20 cursor-pointer ${hasDarkGallery(selectedProject.id) ? 'text-white' : 'text-neutral-900 dark:text-neutral-50'}`}
                     >
                       <ChevronRight size={24} />
                     </button>
@@ -368,7 +493,7 @@ const ProjectShowcase: React.FC = () => {
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
                         className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                          selectedProject.id === '1' || selectedProject.id === '2'
+                          hasDarkGallery(selectedProject.id)
                             ? (index === currentImageIndex ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:scale-125')
                             : (index === currentImageIndex ? 'w-8 bg-neutral-900 dark:bg-neutral-50' : 'w-2 bg-black/40 dark:bg-white/40 hover:scale-125')
                         }`}

@@ -8,8 +8,8 @@ const LanguageSelector: React.FC = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const languages = [
-        { code: 'en' as Language, name: 'English', flag: '🇺🇸' },
-        { code: 'es' as Language, name: 'Español', flag: '🇪🇸' }
+        { code: 'en' as Language, name: 'English', short: 'Eng' },
+        { code: 'es' as Language, name: 'Español', short: 'Esp' }
     ];
 
     const currentLanguage = languages.find(lang => lang.code === language);
@@ -43,7 +43,7 @@ const LanguageSelector: React.FC = () => {
             >
                 <Globe size={20} />
                 <span className="text-sm font-medium">
-          {currentLanguage?.flag} {currentLanguage?.code.toUpperCase()}
+          {currentLanguage?.short}
         </span>
                 <ChevronDown
                     size={16}
@@ -64,10 +64,9 @@ const LanguageSelector: React.FC = () => {
                                     : 'hover:bg-neutral-900/5 dark:hover:bg-neutral-50/10 text-neutral-900 dark:text-neutral-50'
                             }`}
                         >
-                            <span className="text-lg">{lang.flag}</span>
                             <div className="flex flex-col">
                                 <span className="font-medium">{lang.name}</span>
-                                <span className="text-xs opacity-70">{lang.code.toUpperCase()}</span>
+                                <span className="text-xs opacity-70">{lang.short}</span>
                             </div>
                             {language === lang.code && (
                                 <div className="ml-auto w-2 h-2 bg-neutral-900 dark:bg-neutral-50 rounded-full"></div>
