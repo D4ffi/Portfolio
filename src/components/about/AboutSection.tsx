@@ -11,6 +11,13 @@ type Job = {
   end: Period | null; // null = trabajo actual
   stack: Tech[];
 };
+type Cert = {
+  name: string;
+  issuer: string;
+  badge: string; // archivo dentro de /public
+  issued: Period;
+  verifyUrl?: string; // enlace de verificación (Oracle / Credly); opcional
+};
 
 /* Experiencia — orden cronológico inverso (lo más reciente primero, como
    en un CV). Los roles se dejan en inglés (convención en perfiles técnicos);
@@ -51,6 +58,18 @@ const EXPERIENCE: Job[] = [
       { name: "JavaScript", logo: "javascript.svg" },
       { name: "Google Cloud", logo: "googlecloud.svg" },
     ],
+  },
+];
+
+/* Certificaciones — orden cronológico inverso (lo más reciente primero). */
+const CERTIFICATIONS: Cert[] = [
+  {
+    name: "Oracle Certified Professional: Java SE 25 Developer",
+    issuer: "Oracle",
+    badge: "oracle-java-se25-ocp.png",
+    issued: { year: 2026, month: 5 },
+    verifyUrl:
+      "https://catalog-education.oracle.com/pls/certview/sharebadge?id=08880D8AE6820EE7139FA7727DBFFECEED866559DFAE82BB07E4AA24A0CF4C95",
   },
 ];
 
@@ -151,6 +170,71 @@ const JobEntry: React.FC<{ job: Job; period: string; divider: boolean }> = ({
         <TechItem key={`${job.company}-${tech.name}`} {...tech} />
       ))}
     </ul>
+  </article>
+);
+
+/* Entrada de certificación: badge + credencial + emisor/fecha + enlace de
+   verificación opcional. El badge recupera color de marca y se eleva al hover. */
+const CertEntry: React.FC<{
+  cert: Cert;
+  issued: string;
+  verifyLabel: string;
+  divider: boolean;
+}> = ({ cert, issued, verifyLabel, divider }) => (
+  <article
+    className={`group flex items-center gap-5 ${
+      divider ? "border-t border-neutral-200 pt-8 dark:border-neutral-800" : ""
+    }`}
+  >
+    <img
+      src={`/${cert.badge}`}
+      alt={`${cert.name} badge`}
+      width={72}
+      height={72}
+      loading="lazy"
+      className="h-16 w-16 shrink-0 object-contain transition-transform
+                 duration-200 ease-[cubic-bezier(.2,.8,.2,1)]
+                 group-hover:-translate-y-0.5 motion-reduce:transition-none sm:h-20 sm:w-20"
+    />
+    <div className="min-w-0">
+      <h4 className="text-base font-semibold tracking-[-0.01em] text-neutral-900 dark:text-neutral-50 sm:text-lg">
+        {cert.name}
+      </h4>
+      <p className="mt-1 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500">
+        {cert.issuer} · {issued}
+      </p>
+      {cert.verifyUrl && (
+        <a
+          href={cert.verifyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/link relative mt-2 inline-flex items-center gap-1.5 rounded-sm
+                     text-sm font-medium text-tekhelet outline-none
+                     transition-transform duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
+                     active:translate-y-px dark:text-tropical-indigo
+                     focus-visible:ring-2 focus-visible:ring-tropical-indigo
+                     focus-visible:ring-offset-4 focus-visible:ring-offset-bg-light
+                     dark:focus-visible:ring-offset-bg-dark motion-reduce:transition-none"
+        >
+          <span className="relative">
+            {verifyLabel}
+            <span
+              aria-hidden="true"
+              className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0
+                         bg-current transition-transform duration-300
+                         ease-[cubic-bezier(.2,.8,.2,1)] group-hover/link:scale-x-100
+                         group-focus-visible/link:scale-x-100 motion-reduce:transition-none"
+            />
+          </span>
+          <ArrowUpRight
+            className="h-4 w-4 transition-transform duration-200
+                       ease-[cubic-bezier(.2,.8,.2,1)] group-hover/link:translate-x-0.5
+                       group-hover/link:-translate-y-0.5 motion-reduce:transition-none"
+            strokeWidth={2}
+          />
+        </a>
+      )}
+    </div>
   </article>
 );
 
@@ -264,6 +348,31 @@ const AboutSection: React.FC = () => {
             <JobEntry
               job={job}
               period={formatPeriod(job, language, t("about.present"))}
+              divider={i > 0}
+            />
+          </Reveal>
+        ))}
+
+        {/* — Certifications — */}
+        <Reveal
+          visible={visible}
+          delay={350 + EXPERIENCE.length * 70}
+          className="mt-16 sm:mt-20"
+        >
+          <SectionLabel as="h3">{t("about.certs_title")}</SectionLabel>
+        </Reveal>
+
+        {CERTIFICATIONS.map((cert, i) => (
+          <Reveal
+            key={cert.name}
+            visible={visible}
+            delay={420 + EXPERIENCE.length * 70 + i * 70}
+            className={i === 0 ? "mt-10" : ""}
+          >
+            <CertEntry
+              cert={cert}
+              issued={monthYear(cert.issued, language)}
+              verifyLabel={t("about.cert_verify")}
               divider={i > 0}
             />
           </Reveal>

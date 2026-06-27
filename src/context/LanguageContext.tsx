@@ -29,6 +29,8 @@ const translations = {
         'about.mod_link': 'See my Mod dev page',
         'about.tech_title': 'Stack & Tools',
         'about.present': 'Present',
+        'about.certs_title': 'Certifications',
+        'about.cert_verify': 'Verify credential',
 
         // Projects Section
         'projects.title': 'Projects',
@@ -77,6 +79,8 @@ const translations = {
         'about.mod_link': 'Ver mi página de desarrollo de Mods',
         'about.tech_title': 'Stack y Herramientas',
         'about.present': 'Actualidad',
+        'about.certs_title': 'Certificaciones',
+        'about.cert_verify': 'Verificar credencial',
 
         // Projects Section
         'projects.title': 'Proyectos',
